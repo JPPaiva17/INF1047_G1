@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+
+# Python / venv (não entram na imagem)
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Django local / dados
+*.sqlite3
+*.log
+media/
+staticfiles/
+
+# Secrets (use variáveis no compose ou runtime)
+.env
+.env.*
+
+# Testes e ferramentas locais
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.tox/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Documentação e artefatos que não rodam no container
+*.md
+!README.md
