@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lobbyzinha — Forgot Password</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'auth/auth.css' %}">
+</head>
+<body>
+
+<div class="page">
+
+  <div class="left">
+    <div class="left-top">
+
+      <div class="brand">
+        <span class="brand-name">Lobbyzinha</span>
+      </div>
+
+      <div class="info-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="#2a2a2a" stroke-width="1.2"/>
+          <path d="M14 12v8M14 9v1" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <h1>Forgot your password?</h1>
+      <p class="subtitle">Enter your email address and an admin will be notified to reset your password.</p>
+
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="msg msg-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <form method="POST" action="{% url 'forgot_password' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label" for="email">Email address</label>
+          <input class="form-input" type="email" id="email" name="email"
+            placeholder="email@example.com" required autocomplete="off"
+            value="{{ request.POST.email }}">
+        </div>
+        <button class="btn-submit" type="submit">Send reset request</button>
+      </form>
+
+      <div class="form-footer" style="margin-top: 16px;">
+        Remembered it? <a href="{% url 'login' %}">Back to login</a>
+      </div>
+
+      <div class="form-footer">
+        Don't have an account? <a href="{% url 'register' %}">Sign up</a>
+      </div>
+
+    </div>
+
+    <div class="left-bottom">
+      &copy; 2025 Lobbyzinha
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="right-orb"></div>
+    <div class="right-orb2"></div>
+    <div class="right-content">
+      <h2>Account security is our priority</h2>
+      <p>Password resets are handled manually by our admin team to keep your account safe.</p>
+      <div class="features">
+        <div class="feature"><div class="feature-dot"></div>Admin-verified process</div>
+        <div class="feature"><div class="feature-dot"></div>Fast manual reset</div>
+        <div class="feature"><div class="feature-dot"></div>Your account stays protected</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
