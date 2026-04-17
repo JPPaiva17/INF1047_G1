@@ -8,16 +8,14 @@
     background: #0c0c0c;
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+    margin: 0;
   }
   
   .page {
     width: 100%;
     max-width: 860px;
     min-height: 560px;
+    margin: 24px auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     border-radius: 12px;
@@ -34,8 +32,7 @@
     background: #0f0f0f;
     border-right: 1px solid #1e1e1e;
   }
-  
-  .left-top {}
+
   
   .brand {
     display: flex;

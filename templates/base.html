@@ -12,7 +12,7 @@
   {% block extra_style %}{% endblock %}
 </head>
 <body>
-
+{% block navbar %}
 <div class="nav-wrapper">
   <nav class="nav-pill">
 
@@ -42,9 +42,11 @@
 
   </nav>
 </div>
+{% endblock %}
 
 {% block content %}{% endblock %}
 
+{% block footer %}
 <footer class="footer">
   <span class="footer-logo">Lobbyzinha</span>
   <div class="footer-links">
@@ -53,6 +55,7 @@
     <a href="https://github.com/JPPaiva17/INF1047_G1" target="_blank">GitHub</a>
   </div>
 </footer>
+{% endblock %}
 
 </body>
 </html>

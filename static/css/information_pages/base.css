@@ -92,7 +92,12 @@ a {
 
 .nav-links a.active {
     color: #fff;
-    background: rgba(255, 255, 255, 0.1);
+    background: #4a4a4a;
+}
+
+.nav-links a:first-child {
+    color: #fff;
+    background: #4a4a4a;
 }
 
 .nav-auth {
