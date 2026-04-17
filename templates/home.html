@@ -1,322 +1,166 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Lobbyzinha — Find Your Team{% endblock %}
+{% block title %}Lobbyzinha — Your next roster starts here{% endblock %}
 
 {% block extra_style %}
-<style>
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 6rem 6% 5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -80px; left: 50%;
-    transform: translateX(-50%);
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
-    font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 1.2rem;
-  }
-
-  .hero h1 span { color: var(--accent); }
-
-  .hero p {
-    color: var(--muted);
-    font-size: 1.15rem;
-    max-width: 540px;
-    margin: 0 auto 2.2rem;
-  }
-
-  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-  /* FEATURED CARD */
-  .featured {
-    padding: 3rem 6%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .dashboard-mock {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem;
-    display: flex;
-    gap: 1.2rem;
-    max-width: 780px;
-    width: 100%;
-    box-shadow: 0 0 20px rgba(255,255,255,0.06);
-    flex-wrap: wrap;
-  }
-
-  .mock-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.2rem;
-    flex: 1;
-    min-width: 220px;
-  }
-
-  .mock-card .label {
-    font-size: 0.7rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.6rem;
-  }
-
-  .mock-card .nickname {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-  }
-
-  .mock-card .meta { color: var(--muted); font-size: 0.85rem; line-height: 1.8; }
-
-  .badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.08);
-    color: var(--accent);
-    border-radius: 6px;
-    padding: 0.15rem 0.6rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-top: 0.5rem;
-  }
-
-  /* FEATURES */
-  .section { padding: 4rem 6%; }
-  .section-title {
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-  .section-sub {
-    text-align: center;
-    color: var(--muted);
-    margin-bottom: 2.5rem;
-    font-size: 0.95rem;
-  }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 1.2rem;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .feature-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.5rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .feature-card:hover {
-    border-color: var(--accent2);
-    box-shadow: 0 0 20px rgba(255,255,255,0.06);
-  }
-
-  .feature-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
-  .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
-  .feature-card p { color: var(--muted); font-size: 0.85rem; }
-
-  /* ROLES */
-  .roles-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 600px) { .roles-grid { grid-template-columns: 1fr; } }
-
-  .role-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.8rem;
-  }
-
-  .role-card h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: var(--accent);
-  }
-
-  .role-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-  .role-card ul li::before { content: '✓ '; color: var(--accent); font-weight: 700; }
-  .role-card ul li { color: var(--muted); font-size: 0.9rem; }
-
-  /* STATS */
-  .stats {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    flex-wrap: wrap;
-    padding: 3rem 6%;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .stat { text-align: center; }
-  .stat .number { font-size: 2rem; font-weight: 800; color: var(--accent); }
-  .stat .desc { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
-
-  /* CTA */
-  .cta {
-    text-align: center;
-    padding: 5rem 6%;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta::before {
-    content: '';
-    position: absolute;
-    bottom: -100px; left: 50%;
-    transform: translateX(-50%);
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1.5rem; }
-  .cta h2 span { color: var(--accent); }
-ç</style>
+<link rel="stylesheet" href="{% static 'css/information_pages/home.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<!-- HERO -->
-<section class="hero">
-  <h1>Find Your Team.<br><span>Play Like a Pro.</span></h1>
-  <p>Join competitive Counter-Strike teams or recruit the perfect players for your squad.</p>
-  <div class="hero-actions">
-    <a href="#" class="btn btn-primary btn-lg">Find a Team</a>
-    <a href="#" class="btn btn-outline btn-lg">Create a Team</a>
+<section class="hero-wrap">
+  <div class="blob-layer"></div>
+  <div class="grain-layer"></div>
+  <div class="grain-layer2"></div>
+  <div class="vignette-layer"></div>
+  <div class="text-backdrop"></div>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow">Ranked CS. Real teams.</span>
+    <h1 class="hero-h1">
+      Your next <span class="gothic">Team</span><br>
+      starts <span class="gothic">Here.</span>
+    </h1>
+    <p class="hero-sub">Match with squads at your level—or build one that wins scrims, not just queues.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary">Find a Team</a>
+      <a href="#" class="btn btn-outline">Create a Team</a>
+    </div>
   </div>
 </section>
 
-<!-- FEATURED DASHBOARD MOCK -->
 <div class="featured">
-  <div class="dashboard-mock">
-    <div class="mock-card">
-      <div class="label">Player Profile</div>
-      <div class="nickname">⚡ xX_Sniper_Xx</div>
-      <div class="meta">
-        Faceit Level: <strong style="color:var(--text)">8</strong><br>
-        GC Level: <strong style="color:var(--text)">14</strong><br>
-        Role: <strong style="color:var(--text)">AWPer</strong><br>
-        Schedule: <strong style="color:var(--text)">19h–23h</strong>
+  <div class="player-cards">
+
+    <div class="pcard">
+      <div class="pcard-banner">
+        <img src="{% static 'images/profile_background.jpg' %}" alt="Profile Background Example">
+        <div class="pcard-avatar-wrap">
+          <div class="pcard-avatar"><img src="{% static 'images/profilepic.png' %}" alt="Profile Picture Example"></div>
+        </div>
       </div>
-      <span class="badge">Available</span>
-    </div>
-    <div class="mock-card">
-      <div class="label">Team Vacancy</div>
-      <div class="nickname">🛡 Team Nexus</div>
-      <div class="meta">
-        Min. Faceit: <strong style="color:var(--text)">7+</strong><br>
-        Role needed: <strong style="color:var(--text)">Rifler</strong><br>
-        Training: <strong style="color:var(--text)">Mon/Wed/Fri</strong><br>
-        Schedule: <strong style="color:var(--text)">20h–22h</strong>
+      <div class="pcard-body">
+        <div class="pcard-head">
+          <div class="pcard-identity">
+            <div class="pcard-name">Yekindar</div>
+            <div class="pcard-role">Rifler</div>
+          </div>
+          <span class="pcard-status pcard-status--available">Available</span>
+        </div>
+        <div class="pcard-tags">
+          <span class="ptag ptag--primary">Entry Fragger</span>
+          <span class="ptag ptag--secondary">Lurker</span>
+          <span class="ptag ptag--tertiary">IGL</span>
+        </div>
+        <div class="pcard-levels">
+          <div class="plevel">
+            <img src="{% static 'images/faceit/lvl10.svg' %}" class="plevel-icon" alt="Faceit Level 10">
+            <span class="plevel-label">Faceit</span>
+          </div>
+          <div class="plevel"><span class="plevel-num">21</span><span class="plevel-label">Gamersclub</span></div>
+        </div>
+        <div class="pcard-socials">
+          <a href="#" class="pcard-social"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="pcard-social"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="pcard-social"><i class="fab fa-steam"></i></a>
+        </div>
       </div>
-      <span class="badge">Open</span>
+      <a href="#" class="pcard-cta">View Profile</a>
     </div>
+
+    <div class="pcard">
+      <div class="pcard-banner">
+        <img src="{% static 'images/team_background.png' %}" alt="Team Background">
+        <div class="pcard-avatar-wrap">
+          <div class="pcard-avatar pcard-avatar--team"><img src="{% static 'images/team_logo.png' %}" alt="Team Nexus Logo"></div>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-head">
+          <div class="pcard-identity">
+            <div class="pcard-name">Team Nexus</div>
+            <div class="pcard-role">Rifler Needed</div>
+          </div>
+          <span class="pcard-status pcard-status--open">Open</span>
+        </div>
+        <div class="pcard-tags">
+          <span class="ptag ptag--primary">Rifler</span>
+          <span class="ptag ptag--secondary">Entry</span>
+          <span class="ptag ptag--tertiary">7+ Faceit</span>
+        </div>
+        <div class="pcard-levels">
+          <div class="plevel"><span class="plevel-num">7+</span><span class="plevel-label">Min. Faceit</span></div>
+          <div class="plevel"><span class="plevel-num">M/W/F</span><span class="plevel-label">Training</span></div>
+        </div>
+        <div class="pcard-socials">
+          <a href="#" class="pcard-social"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="pcard-social"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="pcard-social"><i class="fab fa-steam"></i></a>
+        </div>
+      </div>
+      <a href="#" class="pcard-cta">Apply Now</a>
+    </div>
+
   </div>
 </div>
 
-<!-- FEATURES -->
 <section class="section">
   <div class="section-title">Everything you need to compete</div>
-  <div class="section-sub">Built for players and team owners in the CS competitive scene.</div>
+  <p class="section-sub">Built for players and team owners in the CS competitive scene.</p>
   <div class="cards-grid">
     <div class="feature-card">
-      <div class="feature-icon">🎮</div>
-      <h3>Create your player profile</h3>
+      <div class="feature-icon"><i class="pi pi-user"></i></div>
+      <h3>Create your profile</h3>
       <p>Showcase your skill level, roles, and availability to teams looking for players.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🔍</div>
-      <h3>Find teams by skill level</h3>
+      <div class="feature-icon"><i class="pi pi-search"></i></div>
+      <h3>Find teams by skill</h3>
       <p>Filter vacancies by Faceit level, GC rank, schedule, and role requirements.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📋</div>
-      <h3>Post and manage vacancies</h3>
+      <div class="feature-icon"><i class="pi pi-list"></i></div>
+      <h3>Post vacancies</h3>
       <p>Team owners can create, edit, and close vacancies with full control.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📨</div>
-      <h3>Apply and track applications</h3>
-      <p>Apply to teams and follow the status of each application in real time.</p>
+      <div class="feature-icon"><i class="pi pi-send"></i></div>
+      <h3>Apply and track</h3>
+      <p>Apply to teams and follow each application status in real time.</p>
     </div>
   </div>
 </section>
 
-<!-- ROLES -->
-<section class="section" style="padding-top:0;">
+<section class="section" style="padding-top:0">
   <div class="section-title">Two roles, one platform</div>
-  <div class="section-sub">Different experiences tailored to what you need.</div>
+  <p class="section-sub">Different experiences tailored to what you need.</p>
   <div class="roles-grid">
     <div class="role-card">
-      <h3>🎮 Players</h3>
+      <div class="role-header">
+        <i class="pi pi-shield role-icon"></i>
+        <h3>Players</h3>
+      </div>
       <ul>
-        <li>Create and edit your player profile</li>
-        <li>Browse open team vacancies</li>
-        <li>Apply to teams that match your level</li>
-        <li>Track your application status</li>
+        <li><i class="pi pi-check"></i>Create and edit your player profile</li>
+        <li><i class="pi pi-check"></i>Browse open team vacancies</li>
+        <li><i class="pi pi-check"></i>Apply to teams that match your level</li>
+        <li><i class="pi pi-check"></i>Track your application status</li>
       </ul>
     </div>
     <div class="role-card">
-      <h3>🛡 Team Owners</h3>
+      <div class="role-header">
+        <i class="pi pi-crown role-icon"></i>
+        <h3>Team Owners</h3>
+      </div>
       <ul>
-        <li>Create and manage team vacancies</li>
-        <li>Define skill and schedule requirements</li>
-        <li>Review player candidates</li>
-        <li>Accept or reject applications</li>
+        <li><i class="pi pi-check"></i>Create and manage team vacancies</li>
+        <li><i class="pi pi-check"></i>Define skill and schedule requirements</li>
+        <li><i class="pi pi-check"></i>Review player candidates</li>
+        <li><i class="pi pi-check"></i>Accept or reject applications</li>
       </ul>
     </div>
   </div>
-</section>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat">
-    <div class="number">500+</div>
-    <div class="desc">Registered Players</div>
-  </div>
-  <div class="stat">
-    <div class="number">100+</div>
-    <div class="desc">Active Teams</div>
-  </div>
-  <div class="stat">
-    <div class="number">1000+</div>
-    <div class="desc">Applications Sent</div>
-  </div>
-</div>
-
-<!-- CTA -->
-<section class="cta">
-  <h2>Ready to join your <span>next team?</span></h2>
-  <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get Started</a>
 </section>
 
 {% endblock %}
