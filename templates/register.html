@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobbyzinha — Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/primeicons/3.0.0/primeicons.css"
+        integrity="sha512-Rxb6R6A7p1fiHvhjB7B417xsqg/D7eummpTlNpIVo2qgLbHNlMwdi1Ig180Ddp0ssWSJI/8Z8AHcWWlqw+cS9A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="{% static 'auth/auth.css' %}">
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="left">
+            <div class="left-top">
+
+                <div class="brand">
+                    <span class="brand-name">Lobbyzinha</span>
+                </div>
+
+                <h1>Create your Account</h1>
+                <p class="subtitle">Build your profile, join a team and find your lobby.</p>
+
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <div class="msg msg-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="POST" action="{% url 'register' %}">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-input" type="text" id="username" name="username" placeholder="seu_nick"
+                            required autocomplete="off" value="{{ request.POST.username }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email</label>
+                        <input class="form-input" type="email" id="email" name="email" placeholder="email@exemplo.com"
+                            required autocomplete="off" value="{{ request.POST.email }}">
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-input" type="password" id="password" name="password" placeholder="••••••••"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirm_password">Confirm Password</label>
+                        <input class="form-input" type="password" id="confirm_password" name="confirm_password"
+                            placeholder="••••••••" required>
+                    </div>
+
+                    <button class="btn-submit" type="submit">Create Account</button>
+                </form>
+
+                <div class="form-footer">
+                    Already have an Account? <a href="{% url 'login' %}">Login</a>
+                </div>
+
+            </div>
+
+            <div class="left-bottom">
+                &copy; 2025 Lobbyzinha
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="right-orb"></div>
+            <div class="right-orb2"></div>
+            <div class="right-logo">
+                <img src="{% static 'images/cslogo.gif' %}" alt="CS logo">
+            </div>
+            <div class="right-content">
+                <div class="right-icon">
+                    <i class="pi pi-star" style="color: white; font-size: 24px;"></i>
+                </div>
+                <h2>Find your perfect Team</h2>
+                <p>Connect your Gamersclub and Faceit profiles</p>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-dot"></div>Profile with Gamersclub and Faceit Level
+                    </div>
+                    <div class="feature">
+                        <div class="feature-dot"></div>Build or Join a Team
+                    </div>
+                    <div class="feature">
+                        <div class="feature-dot"></div>Choose your Roles
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
