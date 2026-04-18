@@ -31,6 +31,11 @@
 </section>
 
 <div class="featured">
+  <div class="featured-intro">
+    <span class="featured-eyebrow"><i class="pi pi-bolt"></i> Card Preview</span>
+    <h2 class="featured-title">Check <b>Players</b> and <b>Team</b> cards.</h2>
+    <p class="featured-desc">Browse real player profiles and open team vacancies.<br>Find your fit or post your own spot.</p>
+  </div>
   <div class="player-cards">
 
     <div class="pcard">
@@ -79,7 +84,7 @@
       <div class="pcard-body">
         <div class="pcard-head">
           <div class="pcard-identity">
-            <div class="pcard-name">Team Nexus</div>
+            <div class="pcard-name">9ine Team</div>
             <div class="pcard-role">Rifler Needed</div>
           </div>
           <span class="pcard-status pcard-status--open">Open</span>
@@ -87,16 +92,28 @@
         <div class="pcard-tags">
           <span class="ptag ptag--primary">Rifler</span>
           <span class="ptag ptag--secondary">Entry</span>
-          <span class="ptag ptag--tertiary">7+ Faceit</span>
+          <span class="ptag ptag--tertiary">Challenger Faceit</span>
         </div>
         <div class="pcard-levels">
-          <div class="plevel"><span class="plevel-num">7+</span><span class="plevel-label">Min. Faceit</span></div>
-          <div class="plevel"><span class="plevel-num">M/W/F</span><span class="plevel-label">Training</span></div>
+          <div class="plevel">
+            <img src="{% static 'images/faceit/lvl10.svg' %}" class="plevel-icon" alt="Faceit Level 10">
+            <span class="plevel-label">Faceit</span>
+          </div>
+        </div>
+        <div class="pcard-info-rows">
+          <div class="pinfo-row">
+            <span class="pinfo-label">Contact</span>
+            <span class="pinfo-val">team@9ine.gg</span>
+          </div>
+          <div class="pinfo-row">
+            <span class="pinfo-label"><i class="pi pi-calendar"></i> Deadline</span>
+            <span class="pinfo-val">Jun 30, 2026</span>
+          </div>
         </div>
         <div class="pcard-socials">
           <a href="#" class="pcard-social"><i class="fab fa-instagram"></i></a>
           <a href="#" class="pcard-social"><i class="fab fa-youtube"></i></a>
-          <a href="#" class="pcard-social"><i class="fab fa-steam"></i></a>
+          <a href="#" class="pcard-social"><i class="fas fa-globe"></i></a>
         </div>
       </div>
       <a href="#" class="pcard-cta">Apply Now</a>
@@ -106,8 +123,11 @@
 </div>
 
 <section class="section">
-  <div class="section-title">Everything you need to compete</div>
-  <p class="section-sub">Built for players and team owners in the CS competitive scene.</p>
+  <div class="section-header">
+    <span class="section-eyebrow"><i class="pi pi-star"></i> Features</span>
+    <div class="section-title">Everything you need to compete</div>
+    <p class="section-sub">Built for players and team owners in the CS competitive scene.</p>
+  </div>
   <div class="cards-grid">
     <div class="feature-card">
       <div class="feature-icon"><i class="pi pi-user"></i></div>
@@ -133,8 +153,11 @@
 </section>
 
 <section class="section" style="padding-top:0">
-  <div class="section-title">Two roles, one platform</div>
-  <p class="section-sub">Different experiences tailored to what you need.</p>
+  <div class="section-header">
+    <span class="section-eyebrow"><i class="pi pi-shield"></i> Roles</span>
+    <div class="section-title">Two roles, one platform</div>
+    <p class="section-sub">Different experiences tailored to what you need.</p>
+  </div>
   <div class="roles-grid">
     <div class="role-card">
       <div class="role-header">
