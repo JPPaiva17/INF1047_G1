@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Lobbyzinha — Your next roster starts here{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/information_pages/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero-wrap">
+  <div class="blob-layer"></div>
+  <div class="grain-layer"></div>
+  <div class="grain-layer2"></div>
+  <div class="vignette-layer"></div>
+  <div class="text-backdrop"></div>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow">Ranked CS. Real teams.</span>
+    <h1 class="hero-h1">
+      Your next <span class="gothic">Team</span><br>
+      starts <span class="gothic">Here.</span>
+    </h1>
+    <p class="hero-sub">Match with squads at your level—or build one that wins scrims, not just queues.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary">Find a Team</a>
+      <a href="#" class="btn btn-outline">Create a Team</a>
+    </div>
+  </div>
+</section>
+
+<div class="featured">
+  <div class="featured-intro">
+    <span class="featured-eyebrow"><i class="pi pi-bolt"></i> Card Preview</span>
+    <h2 class="featured-title">Check <b>Players</b> and <b>Team</b> cards.</h2>
+    <p class="featured-desc">Browse real player profiles and open team vacancies.<br>Find your fit or post your own spot.</p>
+  </div>
+  <div class="player-cards">
+
+    <div class="pcard">
+      <div class="pcard-banner">
+        <img src="{% static 'images/profile_background.jpg' %}" alt="Profile Background Example">
+        <div class="pcard-avatar-wrap">
+          <div class="pcard-avatar"><img src="{% static 'images/profilepic.png' %}" alt="Profile Picture Example"></div>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-head">
+          <div class="pcard-identity">
+            <div class="pcard-name">Yekindar</div>
+            <div class="pcard-role">Rifler</div>
+          </div>
+          <span class="pcard-status pcard-status--available">Available</span>
+        </div>
+        <div class="pcard-tags">
+          <span class="ptag ptag--primary">Entry Fragger</span>
+          <span class="ptag ptag--secondary">Lurker</span>
+          <span class="ptag ptag--tertiary">IGL</span>
+        </div>
+        <div class="pcard-levels">
+          <div class="plevel">
+            <img src="{% static 'images/faceit/lvl10.svg' %}" class="plevel-icon" alt="Faceit Level 10">
+            <span class="plevel-label">Faceit</span>
+          </div>
+          <div class="plevel"><span class="plevel-num">21</span><span class="plevel-label">Gamersclub</span></div>
+        </div>
+        <div class="pcard-socials">
+          <a href="#" class="pcard-social"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="pcard-social"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="pcard-social"><i class="fab fa-steam"></i></a>
+        </div>
+      </div>
+      <a href="#" class="pcard-cta">View Profile</a>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-banner">
+        <img src="{% static 'images/team_background.png' %}" alt="Team Background">
+        <div class="pcard-avatar-wrap">
+          <div class="pcard-avatar pcard-avatar--team"><img src="{% static 'images/team_logo.png' %}" alt="Team Nexus Logo"></div>
+        </div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-head">
+          <div class="pcard-identity">
+            <div class="pcard-name">9ine Team</div>
+            <div class="pcard-role">Rifler Needed</div>
+          </div>
+          <span class="pcard-status pcard-status--open">Open</span>
+        </div>
+        <div class="pcard-tags">
+          <span class="ptag ptag--primary">Rifler</span>
+          <span class="ptag ptag--secondary">Entry</span>
+          <span class="ptag ptag--tertiary">Challenger Faceit</span>
+        </div>
+        <div class="pcard-levels">
+          <div class="plevel">
+            <img src="{% static 'images/faceit/lvl10.svg' %}" class="plevel-icon" alt="Faceit Level 10">
+            <span class="plevel-label">Faceit</span>
+          </div>
+        </div>
+        <div class="pcard-info-rows">
+          <div class="pinfo-row">
+            <span class="pinfo-label">Contact</span>
+            <span class="pinfo-val">team@9ine.gg</span>
+          </div>
+          <div class="pinfo-row">
+            <span class="pinfo-label"><i class="pi pi-calendar"></i> Deadline</span>
+            <span class="pinfo-val">Jun 30, 2026</span>
+          </div>
+        </div>
+        <div class="pcard-socials">
+          <a href="#" class="pcard-social"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="pcard-social"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="pcard-social"><i class="fas fa-globe"></i></a>
+        </div>
+      </div>
+      <a href="#" class="pcard-cta">Apply Now</a>
+    </div>
+
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-header">
+    <span class="section-eyebrow"><i class="pi pi-star"></i> Features</span>
+    <div class="section-title">Everything you need to compete</div>
+    <p class="section-sub">Built for players and team owners in the CS competitive scene.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="feature-card">
+      <div class="feature-icon"><i class="pi pi-user"></i></div>
+      <h3>Create your profile</h3>
+      <p>Showcase your skill level, roles, and availability to teams looking for players.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="pi pi-search"></i></div>
+      <h3>Find teams by skill</h3>
+      <p>Filter vacancies by Faceit level, GC rank, schedule, and role requirements.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="pi pi-list"></i></div>
+      <h3>Post vacancies</h3>
+      <p>Team owners can create, edit, and close vacancies with full control.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="pi pi-send"></i></div>
+      <h3>Apply and track</h3>
+      <p>Apply to teams and follow each application status in real time.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="section-header">
+    <span class="section-eyebrow"><i class="pi pi-shield"></i> Roles</span>
+    <div class="section-title">Two roles, one platform</div>
+    <p class="section-sub">Different experiences tailored to what you need.</p>
+  </div>
+  <div class="roles-grid">
+    <div class="role-card">
+      <div class="role-header">
+        <i class="pi pi-shield role-icon"></i>
+        <h3>Players</h3>
+      </div>
+      <ul>
+        <li><i class="pi pi-check"></i>Create and edit your player profile</li>
+        <li><i class="pi pi-check"></i>Browse open team vacancies</li>
+        <li><i class="pi pi-check"></i>Apply to teams that match your level</li>
+        <li><i class="pi pi-check"></i>Track your application status</li>
+      </ul>
+    </div>
+    <div class="role-card">
+      <div class="role-header">
+        <i class="pi pi-crown role-icon"></i>
+        <h3>Team Owners</h3>
+      </div>
+      <ul>
+        <li><i class="pi pi-check"></i>Create and manage team vacancies</li>
+        <li><i class="pi pi-check"></i>Define skill and schedule requirements</li>
+        <li><i class="pi pi-check"></i>Review player candidates</li>
+        <li><i class="pi pi-check"></i>Accept or reject applications</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
