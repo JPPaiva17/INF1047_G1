@@ -1,0 +1,89 @@
+{% extends "app/base_app.html" %}
+{% load static %}
+
+{% block title %}My Invites — Lobbyzinha{% endblock %}
+{% block nav_invites %}active{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/app/team_manage.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="manage-page">
+
+  <div class="manage-header">
+    <div>
+      <div class="manage-title">My Invites</div>
+      <div class="manage-sub">Team invitations you have received</div>
+    </div>
+  </div>
+
+  <!-- PENDING INVITES -->
+  <div class="manage-section">
+    <div class="manage-section-title">
+      <i class="pi pi-clock"></i> Pending
+      {% if pending_invites %}<span class="badge">{{ pending_invites|length }}</span>{% endif %}
+    </div>
+
+    {% if pending_invites %}
+      {% for invite in pending_invites %}
+      <div class="manage-card">
+        <div class="manage-card-avatar manage-card-avatar--team">
+          {% if invite.team.logo %}
+            <img src="{{ invite.team.logo.url }}" alt="{{ invite.team.name }}">
+          {% else %}
+            <i class="pi pi-shield"></i>
+          {% endif %}
+        </div>
+        <div class="manage-card-info">
+          <div class="manage-card-name">{{ invite.team.name }}</div>
+          <div class="manage-card-meta">
+            Invited as <strong>{{ invite.get_role_display }}</strong>
+          </div>
+        </div>
+        <div class="manage-card-actions">
+          <form method="POST" action="{% url 'respond_invite' invite_pk=invite.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="accept">
+            <button type="submit" class="btn-accept"><i class="pi pi-check"></i> Accept</button>
+          </form>
+          <form method="POST" action="{% url 'respond_invite' invite_pk=invite.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="decline">
+            <button type="submit" class="btn-decline"><i class="pi pi-times"></i> Decline</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="manage-empty">No pending invites right now.</p>
+    {% endif %}
+  </div>
+
+  <!-- PAST INVITES -->
+  {% if past_invites %}
+  <div class="manage-section">
+    <div class="manage-section-title"><i class="pi pi-history"></i> History</div>
+    {% for invite in past_invites %}
+    <div class="manage-card manage-card--muted">
+      <div class="manage-card-avatar manage-card-avatar--team">
+        {% if invite.team.logo %}
+          <img src="{{ invite.team.logo.url }}" alt="{{ invite.team.name }}">
+        {% else %}
+          <i class="pi pi-shield"></i>
+        {% endif %}
+      </div>
+      <div class="manage-card-info">
+        <div class="manage-card-name">{{ invite.team.name }}</div>
+        <div class="manage-card-meta">{{ invite.get_role_display }}</div>
+      </div>
+      <div class="invite-status-badge invite-status-badge--{{ invite.status }}">
+        {{ invite.status|capfirst }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

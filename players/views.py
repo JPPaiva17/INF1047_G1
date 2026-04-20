@@ -58,7 +58,14 @@ def forgot_password_view(request):
 @login_required
 def players_list_view(request):
     players = Players.objects.filter(looking_for_team=True).select_related('user')
-    return render(request, 'app/players.html', {'players': players})
+    context = {'players': players}
+    current_player = request.user.player
+    if current_player.is_team_owner:
+        team = current_player.owned_team
+        context['is_team_owner'] = True
+        context['invited_ids'] = set(team.invites.filter(status='pending').values_list('player_id', flat=True))
+        context['member_ids'] = set(team.members.values_list('player_id', flat=True))
+    return render(request, 'app/players.html', context)
 
 
 def profile_view(request, username):

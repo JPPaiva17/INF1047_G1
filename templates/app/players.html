@@ -93,7 +93,22 @@
 
     </div>
 
-    <a href="{% url 'profile' username=player.user.username %}" class="pcard-cta">View Profile</a>
+    <div class="pcard-cta-row">
+      <a href="{% url 'profile' username=player.user.username %}" class="pcard-cta pcard-cta--profile">View Profile</a>
+      {% if is_team_owner %}
+        {% if player.pk in member_ids %}
+          <div class="pcard-cta pcard-cta--state"><i class="pi pi-check"></i></div>
+        {% elif player.pk in invited_ids %}
+          <div class="pcard-cta pcard-cta--state pcard-cta--pending"><i class="pi pi-clock"></i></div>
+        {% else %}
+          <form method="POST" action="{% url 'invite_player' player.pk %}" class="pcard-cta-invite">
+            {% csrf_token %}
+            <input type="hidden" name="role" value="{{ player.primary_role|default:'rifler' }}">
+            <button type="submit" class="pcard-cta pcard-cta--invite">Invite</button>
+          </form>
+        {% endif %}
+      {% endif %}
+    </div>
 
   </div>
   {% endfor %}

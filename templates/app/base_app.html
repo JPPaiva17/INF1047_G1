@@ -46,6 +46,18 @@
         <span class="sidebar-label">Teams</span>
       </a>
 
+      {% if user.player.is_team_owner and user.player.owned_team %}
+        <a href="{% url 'team_manage' pk=user.player.owned_team.pk %}" class="sidebar-item {% block nav_manage %}{% endblock %}">
+          <span class="sidebar-icon"><i class="pi pi-cog"></i></span>
+          <span class="sidebar-label">Manage Team</span>
+        </a>
+      {% else %}
+        <a href="{% url 'my_invites' %}" class="sidebar-item {% block nav_invites %}{% endblock %}">
+          <span class="sidebar-icon"><i class="pi pi-inbox"></i></span>
+          <span class="sidebar-label">My Invites</span>
+        </a>
+      {% endif %}
+
       <div class="sidebar-divider"></div>
 
       <span class="sidebar-section-label">Account</span>
