@@ -1,0 +1,33 @@
+{% load static %}
+<a href="{% url 'team_detail' team.pk %}" class="team-card">
+  <div class="team-card-banner">
+    {% if team.banner %}
+      <img src="{{ team.banner.url }}" alt="{{ team.name }}">
+    {% endif %}
+    <div class="team-card-logo-wrap">
+      {% if team.logo %}
+        <img class="team-card-logo" src="{{ team.logo.url }}" alt="{{ team.name }}">
+      {% else %}
+        <div class="team-card-logo"></div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="team-card-body">
+    <div class="team-card-head">
+      <span class="team-card-name">{{ team.name }}</span>
+      {% if team.is_recruiting %}
+        <span class="team-card-badge">Recruiting</span>
+      {% else %}
+        <span class="team-card-badge team-card-badge--closed">Closed</span>
+      {% endif %}
+    </div>
+    {% if team.description %}
+      <p class="team-card-desc">{{ team.description|truncatechars:80 }}</p>
+    {% endif %}
+    <div class="team-card-meta">
+      {% if team.min_faceit_level %}<span>Faceit {{ team.min_faceit_level }}+</span>{% endif %}
+      {% if team.min_gc_level %}<span>GC {{ team.min_gc_level }}+</span>{% endif %}
+      <span>{{ team.members.count }}/6 members</span>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Teams — Lobbyzinha{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/information_pages/teams_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="teams-page">
+
+  <!-- FEATURED -->
+  {% if not query %}
+  <div class="teams-section">
+    <div class="teams-section-header">
+      <span class="section-eyebrow">Featured</span>
+      <h2 class="section-title">Teams in the spotlight</h2>
+    </div>
+    <div class="teams-grid">
+      {% for team in featured %}
+        {% include "partials/team_card.html" %}
+      {% empty %}
+        <p class="empty">No teams yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- SEARCH -->
+  <div class="teams-section">
+    <form method="GET" class="search-form">
+      <input class="search-input" type="text" name="q" value="{{ query }}" placeholder="Search teams by name...">
+      <button class="search-btn" type="submit">Search</button>
+    </form>
+
+    {% if query %}
+    <p class="search-info">Results for "<strong>{{ query }}</strong>"</p>
+    {% endif %}
+
+    <div class="teams-grid">
+      {% for team in teams %}
+        {% include "partials/team_card.html" %}
+      {% empty %}
+        <p class="empty">No teams found.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}
