@@ -57,10 +57,16 @@
     </nav>
 
     <div class="sidebar-bottom">
-      <div class="sidebar-user">
-        <div class="sidebar-user-avatar">{{ user.username|slice:":1" }}</div>
+      <a href="{% url 'profile' username=user.username %}" class="sidebar-user">
+        <div class="sidebar-user-avatar">
+          {% if user.player.avatar %}
+            <img src="{{ user.player.avatar.url }}" alt="{{ user.username }}">
+          {% else %}
+            {{ user.username|slice:":1" }}
+          {% endif %}
+        </div>
         <span class="sidebar-user-name">{{ user.username }}</span>
-      </div>
+      </a>
       <a href="{% url 'logout' %}" class="sidebar-item">
         <span class="sidebar-icon"><i class="pi pi-sign-out"></i></span>
         <span class="sidebar-label">Logout</span>
