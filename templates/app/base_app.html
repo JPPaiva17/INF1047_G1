@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Lobbyzinha{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/app/base_app.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/primeicons/6.0.1/primeicons.css">
+  {% block extra_style %}{% endblock %}
+</head>
+<body>
+
+<input type="checkbox" id="sidebar-toggle" class="sidebar-toggle-input">
+
+<div class="app-layout">
+
+  <aside class="sidebar">
+
+    <label for="sidebar-toggle" class="sidebar-brand">
+      <span class="sidebar-icon"><i class="pi pi-bars"></i></span>
+      <span class="sidebar-brand-name">Lobbyzinha</span>
+    </label>
+
+    <nav class="sidebar-nav">
+
+      <span class="sidebar-section-label">Main</span>
+
+      <a href="{% url 'dashboard' %}" class="sidebar-item {% block nav_dashboard %}{% endblock %}">
+        <span class="sidebar-icon"><i class="pi pi-th-large"></i></span>
+        <span class="sidebar-label">Dashboard</span>
+      </a>
+
+      <span class="sidebar-section-label">Community</span>
+
+      <a href="{% url 'players_list' %}" class="sidebar-item {% block nav_players %}{% endblock %}">
+        <span class="sidebar-icon"><i class="pi pi-users"></i></span>
+        <span class="sidebar-label">Players</span>
+      </a>
+
+      <a href="{% url 'team_list' %}" class="sidebar-item {% block nav_teams %}{% endblock %}">
+        <span class="sidebar-icon"><i class="pi pi-shield"></i></span>
+        <span class="sidebar-label">Teams</span>
+      </a>
+
+      {% if user.player.is_team_owner and user.player.owned_team %}
+        <a href="{% url 'team_manage' pk=user.player.owned_team.pk %}" class="sidebar-item {% block nav_manage %}{% endblock %}">
+          <span class="sidebar-icon"><i class="pi pi-cog"></i></span>
+          <span class="sidebar-label">Manage Team</span>
+        </a>
+      {% else %}
+        <a href="{% url 'my_invites' %}" class="sidebar-item {% block nav_invites %}{% endblock %}">
+          <span class="sidebar-icon"><i class="pi pi-inbox"></i></span>
+          <span class="sidebar-label">My Invites</span>
+        </a>
+      {% endif %}
+
+      <div class="sidebar-divider"></div>
+
+      <span class="sidebar-section-label">Account</span>
+
+      <a href="{% url 'profile' username=user.username %}" class="sidebar-item {% block nav_profile %}{% endblock %}">
+        <span class="sidebar-icon"><i class="pi pi-user"></i></span>
+        <span class="sidebar-label">My Profile</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="{% url 'profile' username=user.username %}" class="sidebar-user">
+        <div class="sidebar-user-avatar">
+          {% if user.player.avatar %}
+            <img src="{{ user.player.avatar.url }}" alt="{{ user.username }}">
+          {% else %}
+            {{ user.username|slice:":1" }}
+          {% endif %}
+        </div>
+        <span class="sidebar-user-name">{{ user.username }}</span>
+      </a>
+      <a href="{% url 'logout' %}" class="sidebar-item">
+        <span class="sidebar-icon"><i class="pi pi-sign-out"></i></span>
+        <span class="sidebar-label">Logout</span>
+      </a>
+    </div>
+
+  </aside>
+
+  <div class="app-main">
+    <div class="app-content">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% extends "app/base_app.html" %}
+
+{% block title %}Delete {{ team.name }} — Lobbyzinha{% endblock %}
+{% block nav_manage %}active{% endblock %}
+
+{% block content %}
+<div class="delete-confirm-page">
+
+  <div class="delete-confirm-card">
+    <div class="delete-confirm-icon"><i class="pi pi-exclamation-triangle"></i></div>
+    <div class="delete-confirm-title">Delete team?</div>
+    <div class="delete-confirm-sub">
+      You are about to permanently delete <strong>{{ team.name }}</strong>.
+      All members will be removed. This cannot be undone.
+    </div>
+    <div class="delete-confirm-actions">
+      <form method="POST" action="{% url 'team_delete' pk=team.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn-delete-confirm">Yes, delete permanently</button>
+      </form>
+      <a href="{% url 'team_manage' pk=team.pk %}" class="btn-cancel-confirm">Cancel</a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

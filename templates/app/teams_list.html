@@ -1,0 +1,72 @@
+{% extends "app/base_app.html" %}
+{% load static %}
+
+{% block title %}Teams — Lobbyzinha{% endblock %}
+{% block nav_teams %}active{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/app/teams_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="teams-page">
+
+  <div class="teams-page-header">
+    <div>
+      <div class="teams-page-title">Teams</div>
+      <div class="teams-page-sub">Find or create your team</div>
+    </div>
+    {% if not user.player.is_team_owner %}
+      <a href="{% url 'team_create' %}" class="btn-create-team">
+        <i class="pi pi-plus"></i> Create Team
+      </a>
+    {% else %}
+      <a href="{% url 'team_detail' pk=user.player.owned_team.pk %}" class="btn-my-team">
+        <i class="pi pi-shield"></i> My Team
+      </a>
+    {% endif %}
+  </div>
+
+  <form method="GET" class="teams-search-bar">
+    <input class="search-input" type="text" name="q" value="{{ query }}" placeholder="Search teams by name...">
+    <button class="search-btn" type="submit"><i class="pi pi-search"></i></button>
+  </form>
+
+  {% if query %}
+    <p class="search-info">Results for "<strong>{{ query }}</strong>"</p>
+  {% endif %}
+
+  {% if not query %}
+  <div>
+    <div class="teams-section-header">
+      <span class="section-eyebrow"><i class="pi pi-bolt"></i> Featured</span>
+      <div class="section-title">Teams in the spotlight</div>
+    </div>
+    <div class="teams-grid">
+      {% for team in featured %}
+        {% include "partials/team_card.html" %}
+      {% empty %}
+        <p class="empty">No teams yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div>
+    {% if not query %}
+    <div class="teams-section-header">
+      <span class="section-eyebrow">All Teams</span>
+      <div class="section-title">Browse all</div>
+    </div>
+    {% endif %}
+    <div class="teams-grid">
+      {% for team in teams %}
+        {% include "partials/team_card.html" %}
+      {% empty %}
+        <p class="empty">No teams found.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

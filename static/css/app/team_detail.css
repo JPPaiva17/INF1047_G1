@@ -1,0 +1,235 @@
+.team-page {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 6%;
+}
+
+/* BANNER + HEADER */
+.team-banner {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg2);
+}
+
+.team-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.2rem;
+    margin-top: -36px;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+}
+
+.team-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
+    border: 2px solid var(--border);
+    object-fit: cover;
+    background: var(--bg3);
+    flex-shrink: 0;
+}
+
+.team-identity {
+    padding-bottom: 4px;
+}
+
+.team-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.team-badge {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2rem 0.7rem;
+    border-radius: 99px;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    background: rgba(74, 222, 128, 0.07);
+    color: #4ade80;
+}
+
+.team-badge--closed {
+    border-color: var(--border);
+    background: transparent;
+    color: var(--muted);
+}
+
+/* INFO GRID */
+.team-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .team-info-grid { grid-template-columns: 1fr; }
+}
+
+.info-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+}
+
+.info-card-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 0.5rem;
+}
+
+.info-card-value {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* MEMBERS */
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.member-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.member-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.member-info { min-width: 0; }
+
+.member-nick {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.member-role {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.member-levels {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 4px;
+    align-items: center;
+}
+
+.member-level {
+    font-size: 0.68rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.member-level img {
+    width: 16px;
+    height: 16px;
+}
+
+.team-header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+
+.team-action-btn:hover { background: #e5e7eb; }
+
+.request-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.request-role-select {
+  background: #1f1f1f;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+  color: #d1d5db;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  padding: 7px 10px;
+  outline: none;
+}
+
+.request-role-select option { background: #1a1a1a; }
+
+.team-request-pending {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #f59e0b;
+  padding: 8px 0;
+}
+
+.team-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}

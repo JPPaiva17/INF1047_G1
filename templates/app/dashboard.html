@@ -1,0 +1,106 @@
+{% extends "app/base_app.html" %}
+{% load static %}
+
+{% block title %}Dashboard — Lobbyzinha{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/app/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dash-page">
+
+  <div class="dash-header">
+    <div class="dash-title">Dashboard</div>
+    <div class="dash-sub">Welcome back, {{ user.username }}</div>
+  </div>
+
+  <div class="dash-grid">
+
+    <!-- INVITES RECEIVED -->
+    <div class="dash-card">
+      <div class="dash-card-title">
+        <i class="pi pi-inbox"></i> Team Invites
+        {% if received_invites %}<span class="dash-badge">{{ received_invites|length }}</span>{% endif %}
+      </div>
+
+      {% if received_invites %}
+        <div class="dash-list">
+          {% for invite in received_invites %}
+          <div class="dash-item">
+            <div class="dash-item-logo">
+              {% if invite.team.logo %}
+                <img src="{{ invite.team.logo.url }}" alt="{{ invite.team.name }}">
+              {% else %}
+                <i class="pi pi-shield"></i>
+              {% endif %}
+            </div>
+            <div class="dash-item-info">
+              <div class="dash-item-name">{{ invite.team.name }}</div>
+              <div class="dash-item-meta">as <strong>{{ invite.get_role_display }}</strong></div>
+            </div>
+            <div class="dash-item-actions">
+              <form method="POST" action="{% url 'respond_invite' invite_pk=invite.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="accept">
+                <button type="submit" class="dash-btn dash-btn--accept"><i class="pi pi-check"></i></button>
+              </form>
+              <form method="POST" action="{% url 'respond_invite' invite_pk=invite.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="decline">
+                <button type="submit" class="dash-btn dash-btn--decline"><i class="pi pi-times"></i></button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="dash-empty">No pending invites.</p>
+      {% endif %}
+    </div>
+
+    <!-- INVITES SENT (owners only) -->
+    {% if user.player.is_team_owner %}
+    <div class="dash-card">
+      <div class="dash-card-title">
+        <i class="pi pi-send"></i> Invites Sent
+        {% if sent_invites %}<span class="dash-badge">{{ sent_invites|length }}</span>{% endif %}
+      </div>
+
+      {% if sent_invites %}
+        <div class="dash-list">
+          {% for invite in sent_invites %}
+          <div class="dash-item">
+            <div class="dash-item-logo dash-item-logo--player">
+              {% if invite.player.avatar %}
+                <img src="{{ invite.player.avatar.url }}" alt="{{ invite.player.user.username }}">
+              {% else %}
+                {{ invite.player.user.username|slice:":1" }}
+              {% endif %}
+            </div>
+            <div class="dash-item-info">
+              <div class="dash-item-name">{{ invite.player.user.username }}</div>
+              <div class="dash-item-meta">as <strong>{{ invite.get_role_display }}</strong></div>
+            </div>
+            <div class="dash-item-actions">
+              <form method="POST" action="{% url 'cancel_invite' invite_pk=invite.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="dashboard">
+                <button type="submit" class="dash-btn dash-btn--decline" title="Cancel invite">
+                  <i class="pi pi-times"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="dash-empty">No pending invites sent.</p>
+      {% endif %}
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
