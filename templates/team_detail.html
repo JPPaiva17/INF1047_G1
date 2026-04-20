@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ team.name }} — Lobbyzinha{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/information_pages/team_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="team-page">
+
+  {% if team.banner %}
+    <img class="team-banner" src="{{ team.banner.url }}" alt="Banner">
+  {% else %}
+    <div class="team-banner"></div>
+  {% endif %}
+
+  <div class="team-header">
+    {% if team.logo %}
+      <img class="team-logo" src="{{ team.logo.url }}" alt="{{ team.name }}">
+    {% else %}
+      <div class="team-logo"></div>
+    {% endif %}
+    <div class="team-identity">
+      <div class="team-name">{{ team.name }}</div>
+      {% if team.is_recruiting %}
+        <span class="team-badge">Recruiting</span>
+      {% else %}
+        <span class="team-badge team-badge--closed">Not Recruiting</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="team-info-grid">
+    {% if team.description %}
+    <div class="info-card" style="grid-column: span 2;">
+      <div class="info-card-label">About</div>
+      <div class="info-card-value">{{ team.description }}</div>
+    </div>
+    {% endif %}
+
+    {% if team.training_schedule %}
+    <div class="info-card">
+      <div class="info-card-label">Training Schedule</div>
+      <div class="info-card-value">{{ team.training_schedule }}</div>
+    </div>
+    {% endif %}
+
+    <div class="info-card">
+      <div class="info-card-label">Minimum Requirements</div>
+      <div class="info-card-value">
+        {% if team.min_faceit_level %}Faceit: {{ team.min_faceit_level }}+<br>{% endif %}
+        {% if team.min_gc_level %}GC: {{ team.min_gc_level }}+{% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if players %}
+  <div class="section-label">Players</div>
+  <div class="members-grid">
+    {% for member in players %}
+    <div class="member-card">
+      {% if member.player.avatar %}
+        <img class="member-avatar" src="{{ member.player.avatar.url }}" alt="{{ member.player.user.username }}">
+      {% else %}
+        <div class="member-avatar"></div>
+      {% endif %}
+      <div class="member-info">
+        <div class="member-nick">{{ member.player.user.username }}</div>
+        <div class="member-role">{{ member.get_role_display }}</div>
+        <div class="member-levels">
+          {% if member.player.faceit_level %}
+            <span class="member-level">
+              <img src="{% static 'images/faceit/lvl'|add:member.player.faceit_level|add:'.svg' %}" alt="Faceit">
+              Faceit
+            </span>
+          {% endif %}
+          {% if member.player.gamers_club_level %}
+            <span class="member-level">GC {{ member.player.gamers_club_level }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if coach %}
+  <div class="section-label">Coach</div>
+  <div class="members-grid">
+    <div class="member-card">
+      {% if coach.player.avatar %}
+        <img class="member-avatar" src="{{ coach.player.avatar.url }}" alt="{{ coach.player.user.username }}">
+      {% else %}
+        <div class="member-avatar"></div>
+      {% endif %}
+      <div class="member-info">
+        <div class="member-nick">{{ coach.player.user.username }}</div>
+        <div class="member-role">Coach</div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

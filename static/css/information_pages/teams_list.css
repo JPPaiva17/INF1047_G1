@@ -1,0 +1,189 @@
+.teams-page {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 6%;
+}
+
+.teams-section {
+    margin-bottom: 3rem;
+}
+
+.teams-section-header {
+    margin-bottom: 1.5rem;
+}
+
+.section-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 0.3rem;
+}
+
+/* SEARCH */
+.search-form {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-input {
+    flex: 1;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.65rem 1rem;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.search-input:focus { border-color: #444; }
+.search-input::placeholder { color: #333; }
+
+.search-btn {
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.65rem 1.4rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.search-btn:hover { background: #e0e0e0; }
+
+.search-info {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+
+/* GRID */
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.empty {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* CARD */
+.team-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.team-card:hover {
+    border-color: #444;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.team-card-banner {
+    height: 80px;
+    background: var(--bg3);
+    position: relative;
+}
+
+.team-card-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-card-logo-wrap {
+    position: absolute;
+    bottom: -20px;
+    left: 1rem;
+}
+
+.team-card-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid var(--bg2);
+    object-fit: cover;
+    background: var(--bg3);
+    display: block;
+}
+
+.team-card-body {
+    padding: 1.8rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.team-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.team-card-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.team-card-badge {
+    font-size: 0.6rem;
+    font-weight: 500;
+    padding: 0.15rem 0.55rem;
+    border-radius: 99px;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    background: rgba(74, 222, 128, 0.07);
+    color: #4ade80;
+    white-space: nowrap;
+}
+
+.team-card-badge--closed {
+    border-color: var(--border);
+    background: transparent;
+    color: var(--muted);
+}
+
+.team-card-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.team-card-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+}
+
+.team-card-meta span {
+    font-size: 0.68rem;
+    color: var(--muted);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+}
