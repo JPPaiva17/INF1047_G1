@@ -1,0 +1,236 @@
+.players-page-header {
+  margin-bottom: 24px;
+}
+
+.players-page-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #f9fafb;
+  margin-bottom: 4px;
+}
+
+.players-page-sub {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(268px, 318px));
+  gap: 16px;
+}
+
+.players-empty {
+  color: #4b5563;
+  font-size: 14px;
+  font-style: italic;
+  padding: 40px 0;
+}
+
+.pcard {
+  background: #0a0a0a;
+  border: 1px solid #181818;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pcard:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.04);
+}
+
+.pcard-banner {
+  height: 88px;
+  background: linear-gradient(135deg, #0e0e1c 0%, #131628 50%, #0e0e1c 100%);
+  position: relative;
+}
+
+.pcard-banner > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pcard-avatar-wrap {
+  position: absolute;
+  bottom: -26px;
+  left: 1rem;
+  z-index: 2;
+}
+
+.pcard-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #141414;
+  border: 2.5px solid #0a0a0a;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.pcard-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pcard-body {
+  padding: 36px 1rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.pcard-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.pcard-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.pcard-role {
+  font-size: 0.7rem;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+.pcard-status {
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 99px;
+  padding: 0.2rem 0.6rem;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  background: rgba(74, 222, 128, 0.07);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.18);
+}
+
+.pcard-tags {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.ptag {
+  background: transparent;
+  border-radius: 99px;
+  padding: 0.17rem 0.65rem;
+  font-size: 0.67rem;
+  font-weight: 500;
+}
+
+.ptag--primary {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: #ffffff;
+}
+
+.ptag--secondary {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #aaaaaa;
+}
+
+.ptag--tertiary {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: #555555;
+}
+
+.pcard-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.plevel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.plevel-icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.plevel-num {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  min-width: 28px;
+  line-height: 1;
+}
+
+.plevel-label {
+  font-size: 0.72rem;
+  color: #aaaaaa;
+}
+
+.pcard-socials {
+  display: flex;
+  gap: 0.45rem;
+  margin-top: auto;
+}
+
+.pcard-social {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: #0c0c0c;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.72rem;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.pcard-social:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: #141414;
+}
+
+.pcard-cta {
+  display: block;
+  text-align: center;
+  padding: 0.72rem;
+  background: #111;
+  color: #d0d0d0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-top: 1px solid #1e1e1e;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pcard-cta:hover {
+  background: #191919;
+  color: #fff;
+}
