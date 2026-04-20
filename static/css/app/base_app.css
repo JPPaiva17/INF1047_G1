@@ -144,6 +144,7 @@ html, body {
   flex-shrink: 0;
   color: #6b7280;
   transition: color 0.12s;
+  font-size: 15px;
 }
 
 .sidebar-item:hover .sidebar-icon {

@@ -1,0 +1,126 @@
+{% extends "app/base_app.html" %}
+{% load static %}
+
+{% block title %}{{ profile_user.username }} — Lobbyzinha{% endblock %}
+{% block nav_profile %}{% if is_owner %}active{% endif %}{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/app/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+
+  <div class="profile-banner">
+    {% if player.banner %}
+      <img src="{{ player.banner.url }}" alt="banner">
+    {% else %}
+      <div class="profile-banner-placeholder"></div>
+    {% endif %}
+  </div>
+
+  <div class="profile-header">
+    <div class="profile-avatar">
+      {% if player.avatar %}
+        <img src="{{ player.avatar.url }}" alt="{{ profile_user.username }}">
+      {% else %}
+        <div class="profile-avatar-placeholder">{{ profile_user.username|slice:":1" }}</div>
+      {% endif %}
+    </div>
+
+    <div class="profile-header-info">
+      <div class="profile-username">{{ profile_user.username }}</div>
+      <div class="profile-socials">
+        {% if player.instagram %}
+        <a href="{{ player.instagram }}" target="_blank" class="profile-social-link">
+          <i class="pi pi-instagram"></i>
+          Instagram
+        </a>
+        {% endif %}
+        {% if player.youtube %}
+        <a href="{{ player.youtube }}" target="_blank" class="profile-social-link">
+          <i class="pi pi-youtube"></i>
+          YouTube
+        </a>
+        {% endif %}
+        {% if player.steam %}
+        <a href="{{ player.steam }}" target="_blank" class="profile-social-link">
+          <i class="pi pi-external-link"></i>
+          Steam
+        </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if is_owner %}
+    <a href="{% url 'profile_edit' %}" class="profile-edit-btn">
+      <i class="pi pi-pencil"></i>
+      Edit Profile
+    </a>
+    {% endif %}
+  </div>
+
+  <div class="profile-body">
+
+    <div class="profile-card">
+      <div class="profile-card-title">About</div>
+      {% if player.bio %}
+        <p class="profile-bio">{{ player.bio }}</p>
+      {% else %}
+        <p class="profile-bio-empty">No bio yet.</p>
+      {% endif %}
+    </div>
+
+    {% if player.gamers_club_level or player.faceit_level %}
+    <div class="profile-card">
+      <div class="profile-card-title">Stats</div>
+      <div class="profile-stats">
+        {% if player.gamers_club_level %}
+        <div class="profile-stat">
+          <div class="profile-stat-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="profile-stat-label">Gamers Club</div>
+            <div class="profile-stat-value">{{ player.gamers_club_level }}</div>
+          </div>
+        </div>
+        {% endif %}
+        {% if player.faceit_level %}
+        <div class="profile-stat">
+          <div class="profile-stat-icon">
+            <img src="{% static 'images/faceit/lvl' %}{{ player.faceit_level }}.svg" alt="Faceit {{ player.faceit_level }}">
+          </div>
+          <div>
+            <div class="profile-stat-label">Faceit</div>
+            <div class="profile-stat-value">{{ player.faceit_level }}</div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if player.primary_role or player.secondary_role or player.tertiary_role %}
+    <div class="profile-card">
+      <div class="profile-card-title">Roles</div>
+      <div class="profile-roles">
+        {% if player.primary_role %}
+          <span class="profile-role-badge primary">{{ player.get_primary_role_display }}</span>
+        {% endif %}
+        {% if player.secondary_role %}
+          <span class="profile-role-badge">{{ player.get_secondary_role_display }}</span>
+        {% endif %}
+        {% if player.tertiary_role %}
+          <span class="profile-role-badge">{{ player.get_tertiary_role_display }}</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+
+</div>
+{% endblock %}

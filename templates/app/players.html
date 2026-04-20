@@ -1,0 +1,105 @@
+{% extends "app/base_app.html" %}
+{% load static %}
+
+{% block title %}Players — Lobbyzinha{% endblock %}
+{% block nav_players %}active{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/app/players.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="players-page-header">
+  <div class="players-page-title">Players</div>
+  <div class="players-page-sub">{{ players.count }} player{{ players.count|pluralize }} looking for a team</div>
+</div>
+
+{% if players %}
+<div class="players-grid">
+  {% for player in players %}
+  <div class="pcard">
+
+    <div class="pcard-banner">
+      {% if player.banner %}
+        <img src="{{ player.banner.url }}" alt="banner">
+      {% endif %}
+      <div class="pcard-avatar-wrap">
+        <div class="pcard-avatar">
+          {% if player.avatar %}
+            <img src="{{ player.avatar.url }}" alt="{{ player.user.username }}">
+          {% else %}
+            {{ player.user.username|slice:":1" }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="pcard-body">
+
+      <div class="pcard-head">
+        <div>
+          <div class="pcard-name">{{ player.user.username }}</div>
+          {% if player.primary_role %}
+            <div class="pcard-role">{{ player.get_primary_role_display }}</div>
+          {% endif %}
+        </div>
+        <span class="pcard-status">Available</span>
+      </div>
+
+      {% if player.primary_role or player.secondary_role or player.tertiary_role %}
+      <div class="pcard-tags">
+        {% if player.primary_role %}
+          <span class="ptag ptag--primary">{{ player.get_primary_role_display }}</span>
+        {% endif %}
+        {% if player.secondary_role %}
+          <span class="ptag ptag--secondary">{{ player.get_secondary_role_display }}</span>
+        {% endif %}
+        {% if player.tertiary_role %}
+          <span class="ptag ptag--tertiary">{{ player.get_tertiary_role_display }}</span>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {% if player.faceit_level or player.gamers_club_level %}
+      <div class="pcard-levels">
+        {% if player.faceit_level %}
+        <div class="plevel">
+          <img src="{% static 'images/faceit/lvl' %}{{ player.faceit_level }}.svg" class="plevel-icon" alt="Faceit {{ player.faceit_level }}">
+          <span class="plevel-label">Faceit {{ player.faceit_level }}</span>
+        </div>
+        {% endif %}
+        {% if player.gamers_club_level %}
+        <div class="plevel">
+          <span class="plevel-num">{{ player.gamers_club_level }}</span>
+          <span class="plevel-label">Gamers Club</span>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {% if player.instagram or player.youtube or player.steam %}
+      <div class="pcard-socials">
+        {% if player.instagram %}
+          <a href="{{ player.instagram }}" target="_blank" class="pcard-social"><i class="pi pi-instagram"></i></a>
+        {% endif %}
+        {% if player.youtube %}
+          <a href="{{ player.youtube }}" target="_blank" class="pcard-social"><i class="pi pi-youtube"></i></a>
+        {% endif %}
+        {% if player.steam %}
+          <a href="{{ player.steam }}" target="_blank" class="pcard-social"><i class="pi pi-external-link"></i></a>
+        {% endif %}
+      </div>
+      {% endif %}
+
+    </div>
+
+    <a href="{% url 'profile' username=player.user.username %}" class="pcard-cta">View Profile</a>
+
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p class="players-empty">No players looking for a team right now.</p>
+{% endif %}
+
+{% endblock %}
