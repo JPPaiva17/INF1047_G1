@@ -13,6 +13,7 @@ urlpatterns = [
     path('<int:pk>/set-role/', views.owner_set_role, name='owner_set_role'),
     path('<int:pk>/edit/', views.team_edit, name='team_edit'),
     path('<int:pk>/delete/', views.team_delete, name='team_delete'),
+    path('<int:pk>/delete/confirm/', views.team_delete_confirm, name='team_delete_confirm'),
     path('<int:team_pk>/request/', views.request_join, name='request_join'),
     path('invite/<int:invite_pk>/cancel/', views.cancel_invite, name='cancel_invite'),
 ]
