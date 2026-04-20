@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static player_tags %}
 
 {% block title %}{{ team.name }} — Lobbyzinha{% endblock %}
 
@@ -72,7 +72,7 @@
         <div class="member-levels">
           {% if member.player.faceit_level %}
             <span class="member-level">
-              <img src="{% static 'images/faceit/lvl'|add:member.player.faceit_level|add:'.svg' %}" alt="Faceit">
+              <img src="{% static member.player.faceit_level|faceit_icon %}" alt="Faceit">
               Faceit
             </span>
           {% endif %}
