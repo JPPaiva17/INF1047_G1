@@ -10,6 +10,14 @@
   --item-text: #374151;
   --section-label: #9ca3af;
   --app-bg: #1a1a1a;
+
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #1a1a1a;
+  --text: #f0f0f0;
+  --muted: #888;
+  --border: #222;
+  --radius: 10px;
 }
 
 html, body {

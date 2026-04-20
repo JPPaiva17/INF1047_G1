@@ -1,10 +1,11 @@
-{% extends "base.html" %}
+{% extends "app/base_app.html" %}
 {% load static %}
 
 {% block title %}Teams — Lobbyzinha{% endblock %}
+{% block nav_teams %}active{% endblock %}
 
 {% block extra_style %}
-<link rel="stylesheet" href="{% static 'css/information_pages/teams_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/app/teams_list.css' %}">
 {% endblock %}
 
 {% block content %}
