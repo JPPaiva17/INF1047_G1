@@ -15,28 +15,42 @@
   <div class="form-section">
     <div class="form-section-title">Photos</div>
 
-    <div class="form-group">
-      <label class="form-label">Profile Photo</label>
-      <label class="form-file-label" for="id_avatar">
-        <i class="pi pi-upload"></i>
-        {% if player.avatar %}Change photo{% else %}Upload photo{% endif %}
-      </label>
-      <input type="file" id="id_avatar" name="avatar" accept="image/*" class="form-file-input">
-    </div>
+    <div class="photo-edit-wrap">
 
-    <div class="form-group">
-      <label class="form-label">Banner</label>
-      <label class="form-file-label" for="id_banner">
-        <i class="pi pi-upload"></i>
-        {% if player.banner %}Change banner{% else %}Upload banner{% endif %}
+      <label for="id_banner" class="photo-banner-label">
+        {% if player.banner %}
+          <img id="banner-preview" src="{{ player.banner.url }}" alt="banner">
+        {% else %}
+          <img id="banner-preview" src="" style="display:none" alt="banner">
+          <div class="photo-banner-placeholder" id="banner-placeholder"></div>
+        {% endif %}
+        <div class="photo-overlay">
+          <i class="pi pi-camera"></i>
+          <span>Change Banner</span>
+        </div>
       </label>
       <input type="file" id="id_banner" name="banner" accept="image/*" class="form-file-input">
+
+      <div class="photo-avatar-wrap">
+        <label for="id_avatar" class="photo-avatar-label">
+          <div class="photo-avatar">
+            {% if player.avatar %}
+              <img id="avatar-preview" src="{{ player.avatar.url }}" alt="avatar">
+            {% else %}
+              <img id="avatar-preview" src="" style="display:none" alt="avatar">
+              <span id="avatar-initial">{{ user.username|slice:":1" }}</span>
+            {% endif %}
+          </div>
+          <div class="photo-avatar-overlay"><i class="pi pi-camera"></i></div>
+        </label>
+        <input type="file" id="id_avatar" name="avatar" accept="image/*" class="form-file-input">
+      </div>
+
     </div>
   </div>
 
   <div class="form-section">
     <div class="form-section-title">About</div>
-
     <div class="form-group">
       <label class="form-label" for="id_bio">Bio</label>
       <textarea id="id_bio" name="bio" class="form-textarea" placeholder="Tell something about yourself...">{{ player.bio }}</textarea>
@@ -59,24 +73,25 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label class="form-label" for="id_primary">Primary Role</label>
-      <select id="id_primary" name="primary_role" class="form-select">
-        <option value=""> None </option>
-        {% for value, label in role_choices %}
-          <option value="{{ value }}" {% if player.primary_role == value %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label" for="id_secondary">Secondary Role</label>
-      <select id="id_secondary" name="secondary_role" class="form-select">
-        <option value=""> None </option>
-        {% for value, label in role_choices %}
-          <option value="{{ value }}" {% if player.secondary_role == value %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-      </select>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="id_primary">Primary Role</label>
+        <select id="id_primary" name="primary_role" class="form-select">
+          <option value=""> None </option>
+          {% for value, label in role_choices %}
+            <option value="{{ value }}" {% if player.primary_role == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="id_secondary">Secondary Role</label>
+        <select id="id_secondary" name="secondary_role" class="form-select">
+          <option value=""> None </option>
+          {% for value, label in role_choices %}
+            <option value="{{ value }}" {% if player.secondary_role == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
     </div>
 
     <div class="form-group">
@@ -93,20 +108,21 @@
   <div class="form-section">
     <div class="form-section-title">Social Links</div>
 
-    <div class="form-group">
-      <label class="form-label" for="id_instagram">Instagram URL</label>
-      <input type="url" id="id_instagram" name="instagram" class="form-input"
-             value="{{ player.instagram }}" placeholder="https://instagram.com/username">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="id_instagram"><i class="pi pi-instagram"></i> Instagram</label>
+        <input type="url" id="id_instagram" name="instagram" class="form-input"
+               value="{{ player.instagram }}" placeholder="https://instagram.com/username">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="id_youtube"><i class="pi pi-youtube"></i> YouTube</label>
+        <input type="url" id="id_youtube" name="youtube" class="form-input"
+               value="{{ player.youtube }}" placeholder="https://youtube.com/@channel">
+      </div>
     </div>
 
     <div class="form-group">
-      <label class="form-label" for="id_youtube">YouTube URL</label>
-      <input type="url" id="id_youtube" name="youtube" class="form-input"
-             value="{{ player.youtube }}" placeholder="https://youtube.com/@channel">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label" for="id_steam">Steam URL</label>
+      <label class="form-label" for="id_steam"><i class="pi pi-external-link"></i> Steam</label>
       <input type="url" id="id_steam" name="steam" class="form-input"
              value="{{ player.steam }}" placeholder="https://steamcommunity.com/id/username">
     </div>
@@ -115,9 +131,9 @@
   <div class="form-section">
     <div class="form-section-title">Availability</div>
     <div class="form-group">
-      <label class="form-label">
+      <label class="form-label" style="flex-direction: row; align-items: center; gap: 10px; cursor: pointer;">
         <input type="checkbox" name="looking_for_team" {% if player.looking_for_team %}checked{% endif %}
-               style="margin-right: 8px; accent-color: #111111;">
+               style="accent-color: #111111; width: 15px; height: 15px;">
         Looking for team
       </label>
     </div>
@@ -129,4 +145,29 @@
   </div>
 
 </form>
+
+<script>
+  function previewFile(inputId, previewId, placeholderId, initialId) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    const placeholder = placeholderId ? document.getElementById(placeholderId) : null;
+    const initial = initialId ? document.getElementById(initialId) : null;
+
+    input.addEventListener('change', function () {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        if (placeholder) placeholder.style.display = 'none';
+        if (initial) initial.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  previewFile('id_banner', 'banner-preview', 'banner-placeholder', null);
+  previewFile('id_avatar', 'avatar-preview', null, 'avatar-initial');
+</script>
 {% endblock %}
