@@ -11,6 +11,22 @@
 {% block content %}
 <div class="teams-page">
 
+  <div class="teams-page-header">
+    <div>
+      <div class="teams-page-title">Teams</div>
+      <div class="teams-page-sub">Find or create your team</div>
+    </div>
+    {% if not user.player.is_team_owner %}
+      <a href="{% url 'team_create' %}" class="btn-create-team">
+        <i class="pi pi-plus"></i> Create Team
+      </a>
+    {% else %}
+      <a href="{% url 'team_detail' pk=user.player.owned_team.pk %}" class="btn-my-team">
+        <i class="pi pi-shield"></i> My Team
+      </a>
+    {% endif %}
+  </div>
+
   <!-- FEATURED -->
   {% if not query %}
   <div class="teams-section">
