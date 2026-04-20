@@ -31,6 +31,31 @@
         <span class="team-badge team-badge--closed">Not Recruiting</span>
       {% endif %}
     </div>
+    <div class="team-header-actions">
+      {% if is_owner %}
+        <a href="{% url 'team_manage' pk=team.pk %}" class="team-action-btn">
+          <i class="pi pi-cog"></i> Manage Team
+        </a>
+      {% elif can_request and team.is_recruiting %}
+        {% if has_pending_request %}
+          <div class="team-request-pending"><i class="pi pi-clock"></i> Request sent</div>
+        {% else %}
+          <form method="POST" action="{% url 'request_join' team_pk=team.pk %}" class="request-form">
+            {% csrf_token %}
+            <select name="role" class="request-role-select">
+              {% for value, label in role_choices %}
+                <option value="{{ value }}">{{ label }}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="team-action-btn">
+              <i class="pi pi-send"></i> Request to Join
+            </button>
+          </form>
+        {% endif %}
+      {% elif is_member %}
+        <div class="team-request-pending"><i class="pi pi-check"></i> You're a member</div>
+      {% endif %}
+    </div>
   </div>
 
   <div class="team-info-grid">

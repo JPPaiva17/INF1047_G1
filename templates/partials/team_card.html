@@ -1,33 +1,78 @@
 {% load static %}
-<a href="{% url 'team_detail' team.pk %}" class="team-card">
-  <div class="team-card-banner">
+<a href="{% url 'team_detail' team.pk %}" class="tcard">
+
+  <div class="tcard-banner">
     {% if team.banner %}
       <img src="{{ team.banner.url }}" alt="{{ team.name }}">
     {% endif %}
-    <div class="team-card-logo-wrap">
-      {% if team.logo %}
-        <img class="team-card-logo" src="{{ team.logo.url }}" alt="{{ team.name }}">
-      {% else %}
-        <div class="team-card-logo"></div>
-      {% endif %}
+    <div class="tcard-logo-wrap">
+      <div class="tcard-logo">
+        {% if team.logo %}
+          <img src="{{ team.logo.url }}" alt="{{ team.name }}">
+        {% else %}
+          <i class="pi pi-shield"></i>
+        {% endif %}
+      </div>
     </div>
   </div>
-  <div class="team-card-body">
-    <div class="team-card-head">
-      <span class="team-card-name">{{ team.name }}</span>
+
+  <div class="tcard-body">
+
+    <div class="tcard-head">
+      <div>
+        <div class="tcard-name">{{ team.name }}</div>
+        {% if team.training_schedule %}
+          <div class="tcard-schedule">{{ team.training_schedule|truncatechars:40 }}</div>
+        {% endif %}
+      </div>
       {% if team.is_recruiting %}
-        <span class="team-card-badge">Recruiting</span>
+        <span class="tcard-badge tcard-badge--open">Recruiting</span>
       {% else %}
-        <span class="team-card-badge team-card-badge--closed">Closed</span>
+        <span class="tcard-badge tcard-badge--closed">Closed</span>
       {% endif %}
     </div>
+
     {% if team.description %}
-      <p class="team-card-desc">{{ team.description|truncatechars:80 }}</p>
+      <p class="tcard-desc">{{ team.description|truncatechars:75 }}</p>
     {% endif %}
-    <div class="team-card-meta">
-      {% if team.min_faceit_level %}<span>Faceit {{ team.min_faceit_level }}+</span>{% endif %}
-      {% if team.min_gc_level %}<span>GC {{ team.min_gc_level }}+</span>{% endif %}
-      <span>{{ team.members.count }}/6 members</span>
+
+    <div class="tcard-meta">
+      {% if team.min_faceit_level %}
+        <span class="tcard-tag"><img src="{% static 'images/faceit/lvl' %}{{ team.min_faceit_level }}.svg" class="tcard-faceit-icon"> Faceit {{ team.min_faceit_level }}+</span>
+      {% endif %}
+      {% if team.min_gc_level %}
+        <span class="tcard-tag">GC {{ team.min_gc_level }}+</span>
+      {% endif %}
+      <span class="tcard-tag">{{ team.members.count }}/6</span>
     </div>
+
+    {% if team.trial_deadline or team.contact %}
+    <div class="tcard-info-rows">
+      {% if team.contact %}
+        <div class="tcard-info-row">
+          <span class="tcard-info-label"><i class="pi pi-envelope"></i></span>
+          <span class="tcard-info-val">{{ team.contact|truncatechars:30 }}</span>
+        </div>
+      {% endif %}
+      {% if team.trial_deadline %}
+        <div class="tcard-info-row">
+          <span class="tcard-info-label"><i class="pi pi-calendar"></i> Deadline</span>
+          <span class="tcard-info-val">{{ team.trial_deadline|date:"M d, Y" }}</span>
+        </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if team.instagram or team.youtube or team.website %}
+    <div class="tcard-socials">
+      {% if team.instagram %}<span class="tcard-social"><i class="pi pi-instagram"></i></span>{% endif %}
+      {% if team.youtube %}<span class="tcard-social"><i class="pi pi-youtube"></i></span>{% endif %}
+      {% if team.website %}<span class="tcard-social"><i class="pi pi-globe"></i></span>{% endif %}
+    </div>
+    {% endif %}
+
   </div>
+
+  <div class="tcard-cta">View Team</div>
+
 </a>

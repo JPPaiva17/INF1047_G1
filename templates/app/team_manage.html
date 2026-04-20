@@ -1,0 +1,302 @@
+{% extends "app/base_app.html" %}
+{% load static %}
+
+{% block title %}Manage {{ team.name }} — Lobbyzinha{% endblock %}
+{% block nav_manage %}active{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{% static 'css/app/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/app/team_manage.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="manage-page">
+
+  <div class="manage-header">
+    <div>
+      <div class="manage-title">{{ team.name }}</div>
+      <div class="manage-sub">Team Management</div>
+    </div>
+    <a href="{% url 'team_detail' pk=team.pk %}" class="manage-view-btn">
+      <i class="pi pi-eye"></i> View Page
+    </a>
+  </div>
+
+  <!-- EDIT TEAM -->
+  <form method="POST" enctype="multipart/form-data" action="{% url 'team_edit' pk=team.pk %}">
+    {% csrf_token %}
+
+    <div class="form-section">
+      <div class="form-section-title">Photos</div>
+
+      <div class="photo-edit-wrap">
+        <label for="id_banner" class="photo-banner-label">
+          {% if team.banner %}
+            <img src="{{ team.banner.url }}" alt="banner">
+          {% else %}
+            <div class="photo-banner-placeholder"></div>
+          {% endif %}
+          <div class="photo-overlay">
+            <i class="pi pi-camera"></i>
+            <span>Change Banner</span>
+          </div>
+        </label>
+        <input type="file" id="id_banner" name="banner" accept="image/*" class="form-file-input">
+
+        <div class="photo-logo-wrap">
+          <label for="id_logo" class="photo-logo-label">
+            {% if team.logo %}
+              <img src="{{ team.logo.url }}" alt="logo">
+            {% else %}
+              <div class="photo-logo"><i class="pi pi-shield"></i></div>
+            {% endif %}
+            <div class="photo-logo-overlay"><i class="pi pi-camera"></i></div>
+          </label>
+          <input type="file" id="id_logo" name="logo" accept="image/*" class="form-file-input">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Team Info</div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_name">Team Name</label>
+        <input type="text" id="id_name" name="name" class="form-input"
+               value="{{ team.name }}" maxlength="100" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_description">Description</label>
+        <textarea id="id_description" name="description" class="form-textarea"
+                  placeholder="About your team...">{{ team.description }}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_training_schedule">Training Schedule</label>
+        <textarea id="id_training_schedule" name="training_schedule" class="form-textarea"
+                  placeholder="e.g. Weekdays 20h–22h BRT">{{ team.training_schedule }}</textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Minimum Requirements</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="id_min_faceit_level">Faceit Level</label>
+          <input type="number" id="id_min_faceit_level" name="min_faceit_level" class="form-input"
+                 min="1" max="10" value="{{ team.min_faceit_level|default:'' }}" placeholder="1–10">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="id_min_gc_level">Gamers Club Level</label>
+          <input type="number" id="id_min_gc_level" name="min_gc_level" class="form-input"
+                 min="1" max="30" value="{{ team.min_gc_level|default:'' }}" placeholder="1–30">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Recruiting</div>
+      <div class="form-group">
+        <label class="form-label recruiting-label">
+          <input type="checkbox" name="is_recruiting" {% if team.is_recruiting %}checked{% endif %}
+                 class="form-checkbox">
+          <span class="recruiting-text">
+            <span class="recruiting-title">Open for recruiting</span>
+            <span class="recruiting-sub">Players will see your team is looking for members</span>
+          </span>
+        </label>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="id_contact">Contact</label>
+          <input type="text" id="id_contact" name="contact" class="form-input"
+                 value="{{ team.contact }}" placeholder="Email, Discord, etc.">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="id_trial_deadline">Trial Deadline</label>
+          <input type="date" id="id_trial_deadline" name="trial_deadline" class="form-input"
+                 value="{{ team.trial_deadline|date:'Y-m-d'|default:'' }}">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Social Links</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="id_instagram"><i class="pi pi-instagram"></i> Instagram</label>
+          <input type="url" id="id_instagram" name="instagram" class="form-input"
+                 value="{{ team.instagram }}" placeholder="https://instagram.com/team">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="id_youtube"><i class="pi pi-youtube"></i> YouTube</label>
+          <input type="url" id="id_youtube" name="youtube" class="form-input"
+                 value="{{ team.youtube }}" placeholder="https://youtube.com/@team">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="id_website"><i class="pi pi-globe"></i> Website</label>
+        <input type="url" id="id_website" name="website" class="form-input"
+               value="{{ team.website }}" placeholder="https://yourteam.gg">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-save">Save Changes</button>
+    </div>
+  </form>
+
+  <!-- PENDING REQUESTS -->
+  <div class="manage-section">
+    <div class="manage-section-title">
+      <i class="pi pi-send"></i> Join Requests
+      {% if pending_requests %}<span class="badge">{{ pending_requests|length }}</span>{% endif %}
+    </div>
+
+    {% if pending_requests %}
+      {% for req in pending_requests %}
+      <div class="manage-card">
+        <div class="manage-card-avatar">
+          {% if req.player.avatar %}
+            <img src="{{ req.player.avatar.url }}" alt="{{ req.player.user.username }}">
+          {% else %}
+            {{ req.player.user.username|slice:":1" }}
+          {% endif %}
+        </div>
+        <div class="manage-card-info">
+          <div class="manage-card-name">{{ req.player.user.username }}</div>
+          <div class="manage-card-meta">
+            Wants to join as <strong>{{ req.get_role_display }}</strong>
+            {% if req.player.faceit_level %} · Faceit {{ req.player.faceit_level }}{% endif %}
+            {% if req.player.gamers_club_level %} · GC {{ req.player.gamers_club_level }}{% endif %}
+          </div>
+        </div>
+        <div class="manage-card-actions">
+          <form method="POST" action="{% url 'respond_request' req_pk=req.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="accept">
+            <button type="submit" class="btn-accept"><i class="pi pi-check"></i> Accept</button>
+          </form>
+          <form method="POST" action="{% url 'respond_request' req_pk=req.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="decline">
+            <button type="submit" class="btn-decline"><i class="pi pi-times"></i> Decline</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="manage-empty">No pending join requests.</p>
+    {% endif %}
+  </div>
+
+  <!-- PENDING INVITES SENT -->
+  <div class="manage-section">
+    <div class="manage-section-title">
+      <i class="pi pi-envelope"></i> Invites Sent
+      {% if pending_invites %}<span class="badge">{{ pending_invites|length }}</span>{% endif %}
+    </div>
+
+    {% if pending_invites %}
+      {% for invite in pending_invites %}
+      <div class="manage-card">
+        <div class="manage-card-avatar">
+          {% if invite.player.avatar %}
+            <img src="{{ invite.player.avatar.url }}" alt="{{ invite.player.user.username }}">
+          {% else %}
+            {{ invite.player.user.username|slice:":1" }}
+          {% endif %}
+        </div>
+        <div class="manage-card-info">
+          <div class="manage-card-name">{{ invite.player.user.username }}</div>
+          <div class="manage-card-meta">Invited as <strong>{{ invite.get_role_display }}</strong></div>
+        </div>
+        <div class="manage-card-actions">
+          <form method="POST" action="{% url 'cancel_invite' invite_pk=invite.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-decline"><i class="pi pi-times"></i> Cancel</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="manage-empty">No pending invites.</p>
+    {% endif %}
+  </div>
+
+  <!-- YOUR ROLE -->
+  <div class="manage-section">
+    <div class="manage-section-title"><i class="pi pi-user"></i> Your Role</div>
+    <form method="POST" action="{% url 'owner_set_role' pk=team.pk %}" class="owner-role-form">
+      {% csrf_token %}
+      <div class="owner-role-inner">
+        <div class="manage-card-avatar">
+          {% if user.player.avatar %}
+            <img src="{{ user.player.avatar.url }}" alt="{{ user.username }}">
+          {% else %}
+            {{ user.username|slice:":1" }}
+          {% endif %}
+        </div>
+        <div class="manage-card-info">
+          <div class="manage-card-name">{{ user.username }} <span class="owner-tag">Owner</span></div>
+          <div class="manage-card-meta">
+            {% if owner_membership %}Playing as <strong>{{ owner_membership.get_role_display }}</strong>{% else %}Not playing — owner only{% endif %}
+          </div>
+        </div>
+        <select name="role" class="owner-role-select">
+          <option value="">Owner only</option>
+          {% for value, label in role_choices %}
+            <option value="{{ value }}" {% if owner_membership.role == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn-accept">Set</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- CURRENT MEMBERS -->
+  <div class="manage-section">
+    <div class="manage-section-title">
+      <i class="pi pi-users"></i> Members
+      <span class="badge">{{ members|length }}/6</span>
+    </div>
+
+    {% if members %}
+      {% for member in members %}
+      <div class="manage-card">
+        <div class="manage-card-avatar">
+          {% if member.player.avatar %}
+            <img src="{{ member.player.avatar.url }}" alt="{{ member.player.user.username }}">
+          {% else %}
+            {{ member.player.user.username|slice:":1" }}
+          {% endif %}
+        </div>
+        <div class="manage-card-info">
+          <div class="manage-card-name">
+            {{ member.player.user.username }}
+            {% if member.player == team.owner %}<span class="owner-tag">Owner</span>{% endif %}
+          </div>
+          <div class="manage-card-meta">{{ member.get_role_display }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="manage-empty">No members yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- DANGER ZONE -->
+  <div class="manage-section manage-section--danger">
+    <div class="manage-section-title"><i class="pi pi-exclamation-triangle"></i> Danger Zone</div>
+    <div class="manage-card manage-card--danger">
+      <div class="manage-card-info">
+        <div class="manage-card-name">Delete Team</div>
+        <div class="manage-card-meta">This action is permanent and cannot be undone. All members will be removed.</div>
+      </div>
+      <a href="{% url 'team_delete_confirm' pk=team.pk %}" class="btn-delete">Delete Team</a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

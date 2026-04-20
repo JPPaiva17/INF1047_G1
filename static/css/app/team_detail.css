@@ -170,3 +170,66 @@
     width: 16px;
     height: 16px;
 }
+
+.team-header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+
+.team-action-btn:hover { background: #e5e7eb; }
+
+.request-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.request-role-select {
+  background: #1f1f1f;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+  color: #d1d5db;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  padding: 7px 10px;
+  outline: none;
+}
+
+.request-role-select option { background: #1a1a1a; }
+
+.team-request-pending {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #f59e0b;
+  padding: 8px 0;
+}
+
+.team-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}

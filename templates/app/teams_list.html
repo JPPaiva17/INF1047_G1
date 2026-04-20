@@ -27,12 +27,20 @@
     {% endif %}
   </div>
 
-  <!-- FEATURED -->
+  <form method="GET" class="teams-search-bar">
+    <input class="search-input" type="text" name="q" value="{{ query }}" placeholder="Search teams by name...">
+    <button class="search-btn" type="submit"><i class="pi pi-search"></i></button>
+  </form>
+
+  {% if query %}
+    <p class="search-info">Results for "<strong>{{ query }}</strong>"</p>
+  {% endif %}
+
   {% if not query %}
-  <div class="teams-section">
+  <div>
     <div class="teams-section-header">
-      <span class="section-eyebrow">Featured</span>
-      <h2 class="section-title">Teams in the spotlight</h2>
+      <span class="section-eyebrow"><i class="pi pi-bolt"></i> Featured</span>
+      <div class="section-title">Teams in the spotlight</div>
     </div>
     <div class="teams-grid">
       {% for team in featured %}
@@ -44,17 +52,13 @@
   </div>
   {% endif %}
 
-  <!-- SEARCH -->
-  <div class="teams-section">
-    <form method="GET" class="search-form">
-      <input class="search-input" type="text" name="q" value="{{ query }}" placeholder="Search teams by name...">
-      <button class="search-btn" type="submit">Search</button>
-    </form>
-
-    {% if query %}
-    <p class="search-info">Results for "<strong>{{ query }}</strong>"</p>
+  <div>
+    {% if not query %}
+    <div class="teams-section-header">
+      <span class="section-eyebrow">All Teams</span>
+      <div class="section-title">Browse all</div>
+    </div>
     {% endif %}
-
     <div class="teams-grid">
       {% for team in teams %}
         {% include "partials/team_card.html" %}
