@@ -93,7 +93,7 @@
         <div class="member-avatar"></div>
       {% endif %}
       <div class="member-info">
-        <div class="member-nick">{{ member.player.user.username }}</div>
+        <div class="member-nick"><a href="{% url 'profile' username=member.player.user.username %}">{{ member.player.user.username }}</a></div>
         <div class="member-role">{{ member.get_role_display }}</div>
         <div class="member-levels">
           {% if member.player.faceit_level %}
@@ -122,7 +122,7 @@
         <div class="member-avatar"></div>
       {% endif %}
       <div class="member-info">
-        <div class="member-nick">{{ coach.player.user.username }}</div>
+        <div class="member-nick"><a href="{% url 'profile' username=coach.player.user.username %}">{{ coach.player.user.username }}</a></div>
         <div class="member-role">Coach</div>
       </div>
     </div>
