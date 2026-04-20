@@ -29,6 +29,11 @@
 
       <span class="sidebar-section-label">Main</span>
 
+      <a href="{% url 'home' %}" class="sidebar-item">
+        <span class="sidebar-icon"><i class="pi pi-home"></i></span>
+        <span class="sidebar-label">Home</span>
+      </a>
+
       <a href="{% url 'dashboard' %}" class="sidebar-item {% block nav_dashboard %}{% endblock %}">
         <span class="sidebar-icon"><i class="pi pi-th-large"></i></span>
         <span class="sidebar-label">Dashboard</span>
