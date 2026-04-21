@@ -53,6 +53,8 @@ cd INF1047_G1
 **2. Crie o arquivo `.env` na raiz do projeto:**
 ```
 DJANGO_SECRET_KEY=sua-chave-secreta-aqui
+DEBUG=True
+ALLOWED_HOSTS=*
 ```
 
 **3. Suba o container:**
@@ -60,17 +62,12 @@ DJANGO_SECRET_KEY=sua-chave-secreta-aqui
 docker-compose up --build
 ```
 
-**4. Em outro terminal, aplique as migrations:**
-```bash
-docker exec -it prog_web python manage.py migrate
-```
+As migrations e o collectstatic rodam automaticamente. Acesse http://localhost:8000
 
-**5. Crie um superusuário (opcional, para acessar o admin):**
+**Para criar um superusuário (opcional):**
 ```bash
 docker exec -it prog_web python manage.py createsuperuser
 ```
-
-**6. Acesse:** http://localhost:8000
 
 ---
 
@@ -92,6 +89,8 @@ pip install -r requirements.txt
 **3. Crie o arquivo `.env` na raiz do projeto:**
 ```
 DJANGO_SECRET_KEY=sua-chave-secreta-aqui
+DEBUG=True
+ALLOWED_HOSTS=*
 ```
 
 **4. Aplique as migrations e rode:**
@@ -101,6 +100,25 @@ python manage.py runserver
 ```
 
 **5. Acesse:** http://localhost:8000
+
+---
+
+## Deploy no Railway
+
+**1.** Crie uma conta em https://railway.app e conecte com o GitHub.
+
+**2.** Crie um novo projeto → **Deploy from GitHub repo** → selecione `INF1047_G1`.
+
+**3.** Em **Variables**, adicione:
+```
+DJANGO_SECRET_KEY=sua-chave-secreta-aqui
+DEBUG=True
+ALLOWED_HOSTS=*
+```
+
+**4.** Em **Settings** → **Networking** → **Generate Domain**.
+
+O Railway detecta o Dockerfile automaticamente. As migrations e o collectstatic rodam sozinhos no startup.
 
 ---
 
