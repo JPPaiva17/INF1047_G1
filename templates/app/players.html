@@ -43,7 +43,11 @@
             <div class="pcard-role">{{ player.get_primary_role_display }}</div>
           {% endif %}
         </div>
-        <span class="pcard-status">Available</span>
+        {% if player.looking_for_team %}
+          <span class="pcard-status pcard-status--available">Looking for team</span>
+        {% else %}
+          <span class="pcard-status pcard-status--taken">In a team</span>
+        {% endif %}
       </div>
 
       {% if player.primary_role or player.secondary_role or player.tertiary_role %}
