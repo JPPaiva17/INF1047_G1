@@ -144,6 +144,19 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+ 
+.member-nick a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.member-nick a:visited {
+    color: var(--text);
+}
+
+.member-nick a:hover {
+    text-decoration: underline;
+}
 
 .member-role {
     font-size: 0.72rem;

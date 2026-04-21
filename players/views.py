@@ -16,11 +16,15 @@ def register_view(request):
             messages.error(request, "Passwords don't match")
             return redirect('register')
 
-        if User.objects.filter(username = username).exists():
+        if User.objects.filter(username=username).exists():
             messages.error(request, "This Username already exists!")
             return redirect('register')
-        
-        user = User.objects.create_user(username = username, password = password, email = email)
+
+        if email and User.objects.filter(email=email).exists():
+            messages.error(request, "This email is already in use!")
+            return redirect('register')
+
+        user = User.objects.create_user(username=username, password=password, email=email)
         messages.success(request, "Account created succesfully!")
         return redirect('login')
 
@@ -72,10 +76,14 @@ def profile_view(request, username):
     profile_user = get_object_or_404(User, username=username)
     player = get_object_or_404(Players, user=profile_user)
     is_owner = request.user.is_authenticated and request.user == profile_user
+    owned_team = getattr(player, 'owned_team', None)
+    member_team = player.team_memberships.select_related('team').first()
     return render(request, 'app/profile.html', {
         'profile_user': profile_user,
         'player': player,
         'is_owner': is_owner,
+        'owned_team': owned_team,
+        'member_team': member_team,
     })
 
 

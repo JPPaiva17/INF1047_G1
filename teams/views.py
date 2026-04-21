@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Team, TeamMember, TeamInvite, TeamRequest
+from .models import Team, TeamMember, TeamInvite, TeamRequest, Notification
 from .forms import TeamCreateForm
 from players.models import Players
 from players.constants import ROLE_CHOICES
@@ -21,6 +21,12 @@ def team_create(request):
     player = request.user.player
     if hasattr(player, 'owned_team'):
         return redirect('team_detail', pk=player.owned_team.pk)
+
+    if player.team_memberships.exists():
+        return render(request, 'app/team_create.html', {
+            'form': None,
+            'already_in_team': True,
+        })
 
     if request.method == 'POST':
         form = TeamCreateForm(request.POST, request.FILES)
@@ -197,12 +203,15 @@ def respond_invite(request, invite_pk):
             invite.player.save(update_fields=['looking_for_team'])
             TeamInvite.objects.filter(player=invite.player, status='pending').exclude(pk=invite.pk).update(status='declined')
             invite.status = 'accepted'
+            Notification.objects.create(player=invite.player, message=f'Seu convite para {team.name} foi aceito!')
         else:
             invite.status = 'declined'
+            Notification.objects.create(player=invite.player, message=f'O time {team.name} está cheio, convite recusado.')
         invite.save()
     elif action == 'decline':
         invite.status = 'declined'
         invite.save()
+        Notification.objects.create(player=invite.player, message=f'Seu convite para {invite.team.name} foi recusado.')
 
     return redirect('dashboard')
 
@@ -260,10 +269,13 @@ def respond_request(request, req_pk):
             req.player.save(update_fields=['looking_for_team'])
             TeamRequest.objects.filter(player=req.player, status='pending').exclude(pk=req.pk).update(status='declined')
             req.status = 'accepted'
+            Notification.objects.create(player=req.player, message=f'Seu pedido para entrar em {team.name} foi aceito!')
         else:
             req.status = 'declined'
+            Notification.objects.create(player=req.player, message=f'O time {req.team.name} está cheio, pedido recusado.')
     elif action == 'decline':
         req.status = 'declined'
+        Notification.objects.create(player=req.player, message=f'Seu pedido para entrar em {req.team.name} foi recusado.')
 
     req.save()
     return redirect('team_manage', pk=req.team.pk)
@@ -285,3 +297,41 @@ def cancel_invite(request, invite_pk):
     if next_url == 'dashboard':
         return redirect('dashboard')
     return redirect('team_manage', pk=invite.team.pk)
+
+
+@login_required
+def kick_member(request, member_pk):
+    if request.method != 'POST':
+        return redirect('team_list')
+
+    member = get_object_or_404(TeamMember, pk=member_pk)
+    owner_player = request.user.player
+
+    if not hasattr(owner_player, 'owned_team') or owner_player.owned_team != member.team:
+        return redirect('team_list')
+
+    kicked_player = member.player
+    team_name = member.team.name
+    member.delete()
+    kicked_player.looking_for_team = True
+    kicked_player.save(update_fields=['looking_for_team'])
+    Notification.objects.create(player=kicked_player, message=f'Você foi removido do time {team_name}.')
+
+    return redirect('team_manage', pk=member.team.pk)
+
+
+@login_required
+def leave_team(request):
+    if request.method != 'POST':
+        return redirect('dashboard')
+
+    player = request.user.player
+    membership = player.team_memberships.first()
+    if membership:
+        team_name = membership.team.name
+        membership.delete()
+        player.looking_for_team = True
+        player.save(update_fields=['looking_for_team'])
+        Notification.objects.create(player=player, message=f'Você saiu do time {team_name}.')
+
+    return redirect('dashboard')

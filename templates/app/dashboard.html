@@ -101,6 +101,99 @@
     </div>
     {% endif %}
 
+    <!-- JOIN REQUESTS (owners only) -->
+    {% if user.player.is_team_owner %}
+    <div class="dash-card">
+      <div class="dash-card-title">
+        <i class="pi pi-sign-in"></i> Join Requests
+        {% if pending_requests %}<span class="dash-badge">{{ pending_requests|length }}</span>{% endif %}
+      </div>
+
+      {% if pending_requests %}
+        <div class="dash-list">
+          {% for req in pending_requests %}
+          <div class="dash-item">
+            <div class="dash-item-logo dash-item-logo--player">
+              {% if req.player.avatar %}
+                <img src="{{ req.player.avatar.url }}" alt="{{ req.player.user.username }}">
+              {% else %}
+                {{ req.player.user.username|slice:":1" }}
+              {% endif %}
+            </div>
+            <div class="dash-item-info">
+              <div class="dash-item-name">{{ req.player.user.username }}</div>
+              <div class="dash-item-meta">as <strong>{{ req.get_role_display }}</strong></div>
+            </div>
+            <div class="dash-item-actions">
+              <form method="POST" action="{% url 'respond_request' req_pk=req.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="accept">
+                <button type="submit" class="dash-btn dash-btn--accept"><i class="pi pi-check"></i></button>
+              </form>
+              <form method="POST" action="{% url 'respond_request' req_pk=req.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="decline">
+                <button type="submit" class="dash-btn dash-btn--decline"><i class="pi pi-times"></i></button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="dash-empty">No pending join requests.</p>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- NOTIFICATIONS -->
+    {% if notifications %}
+    <div class="dash-card">
+      <div class="dash-card-title"><i class="pi pi-bell"></i> Notificações</div>
+      <div class="dash-list">
+        {% for notif in notifications %}
+        <div class="dash-item dash-item--notif">
+          <div class="dash-item-info">
+            <div class="dash-item-name">{{ notif.message }}</div>
+            <div class="dash-item-meta">{{ notif.created_at|date:"d/m/Y H:i" }}</div>
+          </div>
+          <form method="POST" action="{% url 'mark_notification_read' notif.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="dash-btn dash-btn--decline" title="Dispensar"><i class="pi pi-times"></i></button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- LEAVE TEAM -->
+    {% if user.player.team_memberships.exists and not user.player.is_team_owner %}
+    <div class="dash-card">
+      <div class="dash-card-title"><i class="pi pi-sign-out"></i> Meu Time</div>
+      {% with membership=user.player.team_memberships.first %}
+      <div class="dash-item">
+        <div class="dash-item-logo">
+          {% if membership.team.logo %}
+            <img src="{{ membership.team.logo.url }}" alt="{{ membership.team.name }}">
+          {% else %}
+            <i class="pi pi-shield"></i>
+          {% endif %}
+        </div>
+        <div class="dash-item-info">
+          <div class="dash-item-name">{{ membership.team.name }}</div>
+          <div class="dash-item-meta">{{ membership.get_role_display }}</div>
+        </div>
+        <div class="dash-item-actions">
+          <form method="POST" action="{% url 'leave_team' %}">
+            {% csrf_token %}
+            <button type="submit" class="dash-btn dash-btn--decline" title="Sair do time"><i class="pi pi-sign-out"></i></button>
+          </form>
+        </div>
+      </div>
+      {% endwith %}
+    </div>
+    {% endif %}
+
   </div>
 </div>
 {% endblock %}
