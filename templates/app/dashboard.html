@@ -101,6 +101,50 @@
     </div>
     {% endif %}
 
+    <!-- JOIN REQUESTS (owners only) -->
+    {% if user.player.is_team_owner %}
+    <div class="dash-card">
+      <div class="dash-card-title">
+        <i class="pi pi-sign-in"></i> Join Requests
+        {% if pending_requests %}<span class="dash-badge">{{ pending_requests|length }}</span>{% endif %}
+      </div>
+
+      {% if pending_requests %}
+        <div class="dash-list">
+          {% for req in pending_requests %}
+          <div class="dash-item">
+            <div class="dash-item-logo dash-item-logo--player">
+              {% if req.player.avatar %}
+                <img src="{{ req.player.avatar.url }}" alt="{{ req.player.user.username }}">
+              {% else %}
+                {{ req.player.user.username|slice:":1" }}
+              {% endif %}
+            </div>
+            <div class="dash-item-info">
+              <div class="dash-item-name">{{ req.player.user.username }}</div>
+              <div class="dash-item-meta">as <strong>{{ req.get_role_display }}</strong></div>
+            </div>
+            <div class="dash-item-actions">
+              <form method="POST" action="{% url 'respond_request' req_pk=req.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="accept">
+                <button type="submit" class="dash-btn dash-btn--accept"><i class="pi pi-check"></i></button>
+              </form>
+              <form method="POST" action="{% url 'respond_request' req_pk=req.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="decline">
+                <button type="submit" class="dash-btn dash-btn--decline"><i class="pi pi-times"></i></button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="dash-empty">No pending join requests.</p>
+      {% endif %}
+    </div>
+    {% endif %}
+
   </div>
 </div>
 {% endblock %}
