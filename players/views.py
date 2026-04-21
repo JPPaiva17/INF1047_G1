@@ -105,7 +105,15 @@ def profile_edit_view(request):
             player.avatar = request.FILES['avatar']
         if 'banner' in request.FILES:
             player.banner = request.FILES['banner']
-        player.save()
+        try:
+            player.save()
+        except Exception as e:
+            messages.error(request, f'Error saving profile: {e}')
+            from .constants import ROLE_CHOICES
+            return render(request, 'app/profile_edit.html', {
+                'player': player,
+                'role_choices': ROLE_CHOICES,
+            })
         return redirect('profile', username=request.user.username)
     from .constants import ROLE_CHOICES
     return render(request, 'app/profile_edit.html', {
