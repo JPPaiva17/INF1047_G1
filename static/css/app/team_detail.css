@@ -144,7 +144,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+ 
 .member-nick a {
     color: var(--text);
     text-decoration: none;

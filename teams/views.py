@@ -22,6 +22,12 @@ def team_create(request):
     if hasattr(player, 'owned_team'):
         return redirect('team_detail', pk=player.owned_team.pk)
 
+    if player.team_memberships.exists():
+        return render(request, 'app/team_create.html', {
+            'form': None,
+            'already_in_team': True,
+        })
+
     if request.method == 'POST':
         form = TeamCreateForm(request.POST, request.FILES)
         if form.is_valid():

@@ -10,6 +10,17 @@
 {% endblock %}
 
 {% block content %}
+{% if already_in_team %}
+<div class="form-header">
+  <div class="form-header-title">Create Team</div>
+</div>
+<div class="form-errors">
+  <p class="form-error">Você já está em um time. Saia do time atual antes de criar um novo.</p>
+</div>
+<div class="form-actions">
+  <a href="{% url 'team_list' %}" class="btn-cancel">Voltar para Times</a>
+</div>
+{% else %}
 <form method="POST" enctype="multipart/form-data" class="team-create-form">
   {% csrf_token %}
 
@@ -97,7 +108,7 @@
       <div class="form-group">
         <label class="form-label" for="id_min_gc_level">Gamers Club Level</label>
         <input type="number" id="id_min_gc_level" name="min_gc_level" class="form-input"
-               min="1" max="30" value="{{ form.min_gc_level.value|default:'' }}" placeholder="1–30">
+               min="1" max="21" value="{{ form.min_gc_level.value|default:'' }}" placeholder="1–21">
         {% if form.min_gc_level.errors %}
           <p class="field-error">{{ form.min_gc_level.errors|join:", " }}</p>
         {% endif %}
@@ -149,4 +160,5 @@
   previewFile('id_banner', 'banner-preview', 'banner-placeholder');
   previewFile('id_logo', 'logo-preview', 'logo-placeholder');
 </script>
+{% endif %}
 {% endblock %}
